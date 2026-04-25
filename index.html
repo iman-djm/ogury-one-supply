@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSM Design System — Component Showcase</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --color-brand-primary: #003B63;
+      --color-brand-secondary: #0077C7;
+      --color-secondary-default: #0077C7;
+      --color-secondary-light: #E6F4FF;
+      --color-secondary-dark: #005A96;
+      --color-primary-default: #003B63;
+      --color-white: #FFFFFF;
+      --color-neutral-100: #F6F6F9;
+      --color-neutral-200: #CDD4DF;
+      --color-content-100: #1B3145;
+      --color-content-65: rgba(27,49,69,0.65);
+      --color-content-55: rgba(27,49,69,0.55);
+      --color-content-45: rgba(27,49,69,0.45);
+      --color-content-10: rgba(27,49,69,0.10);
+      --color-content-4: rgba(27,49,69,0.04);
+      --color-overlay-40: rgba(0,0,0,0.4);
+      --color-success-default: #1D875A;
+      --color-success-light: #EEF7F3;
+      --color-info-default: #066DF4;
+      --color-info-light: #E6F0FE;
+      --color-lime-1: #F2FBEE;
+      --color-lime-9: #147C3D;
+      --color-red-1: #FFE8E8;
+      --color-red-9: #650812;
+      --color-magenta-1: #FDE8FF;
+      --color-magenta-8: #5B106A;
+      --shadow-elevation-2: 0px 8px 10px rgba(109,91,91,0.05),
+                            0px 0.71px 2.82px rgba(109,91,91,0.03),
+                            0px 0.13px 1px rgba(109,91,91,0.02),
+                            0px 0.41px 0.72px rgba(109,91,91,0.01);
+      --shadow-elevation-3: 0px 9px 16px rgba(109,91,91,0.10),
+                            0px 1.71px 4.82px rgba(109,91,91,0.05),
+                            0px 1.13px 2px rgba(109,91,91,0.02),
+                            0px 0.41px 0.72px rgba(109,91,91,0.01);
+      --shadow-button-primary: 0px 5px 7px rgba(0,59,99,0.20);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 20px;
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-24: 24px;
+    }
+
+    /* ─── RESET & BASE ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'PP Telegraf', system-ui, sans-serif;
+      color: var(--color-content-100);
+      background: var(--color-neutral-100);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────── */
+    .text-h5  { font-size: 24px; line-height: 28px; font-weight: 600; }
+    .text-h6  { font-size: 20px; line-height: 24px; font-weight: 600; }
+    .text-p1  { font-size: 16px; line-height: 20px; font-weight: 400; }
+    .text-p2-bold    { font-size: 14px; line-height: 18px; font-weight: 600; }
+    .text-p2-regular { font-size: 14px; line-height: 18px; font-weight: 400; }
+    .text-p3-regular { font-size: 12px; line-height: 14px; font-weight: 400; }
+
+    /* ─── SIDEBAR ────────────────────────────────────────── */
+    .showcase-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--color-neutral-100);
+      border-right: 1px solid var(--color-neutral-200);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 16px;
+    }
+    .showcase-sidebar h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-content-45);
+      margin-bottom: 12px;
+    }
+    .showcase-sidebar a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      line-height: 16px;
+      color: var(--color-content-65);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .showcase-sidebar a:hover {
+      background: var(--color-secondary-light);
+      color: var(--color-secondary-default);
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────────── */
+    .showcase-main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    .showcase-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 900px;
+    }
+
+    /* Section card */
+    .section-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-elevation-2);
+    }
+    .section-card > .text-h5 {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+
+    /* Row helpers */
+    .row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px; }
+    .row-center { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+    .col { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn i { font-size: 18px; }
+
+    .btn-primary {
+      background: var(--color-primary-default);
+      color: var(--color-white);
+      box-shadow: var(--shadow-button-primary);
+    }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-secondary {
+      background: var(--color-secondary-light);
+      color: var(--color-secondary-dark);
+    }
+    .btn-secondary:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-secondary-dark);
+    }
+    .btn-ghost:hover { background: var(--color-secondary-light); }
+
+    .btn-disabled, .btn:disabled {
+      background: var(--color-content-4);
+      color: var(--color-content-55);
+      box-shadow: none;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ─── INPUTS ─────────────────────────────────────────── */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-label {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      color: var(--color-content-65);
+    }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .input-icon-left {
+      position: absolute;
+      left: 12px;
+      font-size: 18px;
+      color: var(--color-content-45);
+      pointer-events: none;
+    }
+    .input-icon-right {
+      position: absolute;
+      right: 12px;
+      font-size: 18px;
+      color: var(--color-content-45);
+      pointer-events: none;
+      cursor: pointer;
+    }
+    .input {
+      width: 100%;
+      height: 40px;
+      padding: 7px 12px;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      background: var(--color-white);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--color-content-100);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .input::placeholder { color: var(--color-content-45); }
+    .input:focus { border-color: var(--color-secondary-default); }
+    .input.has-icon-left { padding-left: 38px; }
+    .input.has-icon-right { padding-right: 38px; }
+    .input.input-disabled {
+      background: var(--color-content-4);
+      border-color: var(--color-content-10);
+      color: var(--color-content-55);
+      cursor: not-allowed;
+    }
+
+    /* Input with attached button */
+    .input-btn-group { display: flex; }
+    .input-btn-group .input {
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      border-right: none;
+      flex: 1;
+    }
+    .input-btn-group .btn-validate {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--color-secondary-light);
+      color: var(--color-secondary-dark);
+      border: 1px solid var(--color-neutral-200);
+      border-left: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .input-btn-group .btn-validate:hover { opacity: 0.82; }
+
+    /* ─── DROPDOWN ───────────────────────────────────────── */
+    .dropdown {
+      width: 250px;
+      background: var(--color-white);
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-elevation-3);
+      padding: 16px;
+      max-height: 256px;
+      overflow-y: auto;
+    }
+    .dropdown::-webkit-scrollbar { width: 8px; }
+    .dropdown::-webkit-scrollbar-track { background: transparent; }
+    .dropdown::-webkit-scrollbar-thumb {
+      background: var(--color-content-45);
+      border-radius: 4px;
+    }
+    .dropdown-item {
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--color-content-100);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .dropdown-item:hover { background: var(--color-neutral-100); }
+    .dropdown-item.selected {
+      background: var(--color-secondary-light);
+      color: var(--color-secondary-default);
+      font-weight: 600;
+    }
+
+    /* ─── TYPE CARDS ─────────────────────────────────────── */
+    .type-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: var(--radius-md);
+      background: var(--color-white);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+    .type-card i { font-size: 16px; color: var(--color-content-65); }
+    .type-card.selected {
+      background: var(--color-secondary-light);
+      border-color: var(--color-secondary-default);
+    }
+    .type-card.selected i { color: var(--color-secondary-default); }
+
+    /* ─── TAGS ───────────────────────────────────────────── */
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      line-height: 14px;
+      font-weight: 400;
+    }
+    .tag-passed, .tag-optimal {
+      background: var(--color-lime-1);
+      color: var(--color-lime-9);
+    }
+    .tag-failed, .tag-not-optimal {
+      background: var(--color-red-1);
+      color: var(--color-red-9);
+    }
+
+    /* ─── ALERTS ─────────────────────────────────────────── */
+    .alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--color-content-100);
+    }
+    .alert i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .alert-info { background: var(--color-info-light); }
+    .alert-info i { color: var(--color-info-default); }
+    .alert-success { background: var(--color-success-light); }
+    .alert-success i { color: var(--color-success-default); }
+
+    /* ─── METADATA CARD ──────────────────────────────────── */
+    .meta-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--color-neutral-100);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .meta-favicon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--color-neutral-200);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-content-65);
+    }
+    .meta-info { display: flex; flex-direction: column; gap: 2px; }
+
+    /* ─── VALIDATION CRITERIA ────────────────────────────── */
+    .criteria-list { display: flex; flex-direction: column; gap: 8px; width: 320px; }
+    .criteria-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 30px;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+
+    /* ─── TOAST ──────────────────────────────────────────── */
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-white);
+      box-shadow: var(--shadow-elevation-3);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+    .toast i { font-size: 16px; color: var(--color-success-default); }
+
+    /* ─── AVATAR ─────────────────────────────────────────── */
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--color-magenta-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-magenta-8);
+      flex-shrink: 0;
+    }
+
+    /* ─── SIDENAV ────────────────────────────────────────── */
+    .sidenav {
+      width: 250px;
+      height: 600px;
+      background: var(--color-neutral-100);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-neutral-200);
+      flex-shrink: 0;
+    }
+    .sidenav-logo {
+      height: 106px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--color-brand-secondary);
+      letter-spacing: -0.01em;
+    }
+    .sidenav-logo span { font-weight: 700; }
+    .sidenav-nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-group {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .nav-level1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+    .nav-level1 i.nav-icon { font-size: 24px; color: var(--color-content-65); }
+    .nav-level1.active i.nav-icon { color: var(--color-secondary-default); }
+    .nav-level1-label {
+      flex: 1;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      color: var(--color-content-100);
+    }
+    .nav-level1.active .nav-level1-label { color: var(--color-secondary-default); }
+    .nav-level1 i.nav-chevron { font-size: 16px; color: var(--color-content-45); }
+    .nav-children { padding: 0 4px 4px 4px; }
+    .nav-level2 {
+      display: block;
+      padding: 8px 4px 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--color-content-65);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-level2:hover { background: var(--color-neutral-100); color: var(--color-content-100); }
+    .nav-level2.active {
+      background: var(--color-secondary-light);
+      color: var(--color-secondary-default);
+      font-weight: 600;
+    }
+    .sidenav-bottom { display: flex; flex-direction: column; gap: 12px; }
+    .sidenav-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidenav-user-info { display: flex; flex-direction: column; }
+    .sidenav-collapse {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--color-content-65);
+      transition: background 0.12s;
+    }
+    .btn-icon:hover { background: var(--color-secondary-light); color: var(--color-secondary-default); }
+    .btn-icon i { font-size: 24px; }
+
+    /* ─── COLOR SWATCHES ─────────────────────────────────── */
+    .swatch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .swatch-block {
+      width: 64px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .swatch-name {
+      font-size: 11px;
+      line-height: 14px;
+      color: var(--color-content-65);
+      max-width: 100px;
+      word-break: break-all;
+    }
+    .swatch-hex {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-content-100);
+    }
+
+    /* ─── SUBSECTION ─────────────────────────────────────── */
+    .subsection { margin-bottom: 24px; }
+    .subsection:last-child { margin-bottom: 0; }
+    .subsection-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-content-45);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── SIDEBAR ─────────────────────────────────────── -->
+  <nav class="showcase-sidebar">
+    <h2>Components</h2>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#dropdown">Dropdown</a>
+    <a href="#typecards">Type Cards</a>
+    <a href="#tags">Tags</a>
+    <a href="#alerts">Alerts</a>
+    <a href="#metacard">Metadata Card</a>
+    <a href="#validation">Validation Criteria</a>
+    <a href="#toast">Toast</a>
+    <a href="#avatar">Avatar</a>
+    <a href="#sidenav">Sidenav</a>
+  </nav>
+
+  <!-- ─── MAIN CONTENT ─────────────────────────────────── -->
+  <main class="showcase-main">
+    <div class="showcase-sections">
+
+      <!-- COLORS -->
+      <section class="section-card" id="colors">
+        <div class="text-h5">Colors</div>
+
+        <div class="subsection">
+          <div class="subsection-label">Brand</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#003B63"></div><div class="swatch-name">--color-brand-primary</div><div class="swatch-hex">#003B63</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#0077C7"></div><div class="swatch-name">--color-brand-secondary</div><div class="swatch-hex">#0077C7</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-label">Secondary</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#0077C7"></div><div class="swatch-name">--color-secondary-default</div><div class="swatch-hex">#0077C7</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#E6F4FF"></div><div class="swatch-name">--color-secondary-light</div><div class="swatch-hex">#E6F4FF</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#005A96"></div><div class="swatch-name">--color-secondary-dark</div><div class="swatch-hex">#005A96</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-label">Neutrals</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#FFFFFF"></div><div class="swatch-name">--color-white</div><div class="swatch-hex">#FFFFFF</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#F6F6F9"></div><div class="swatch-name">--color-neutral-100</div><div class="swatch-hex">#F6F6F9</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#CDD4DF"></div><div class="swatch-name">--color-neutral-200</div><div class="swatch-hex">#CDD4DF</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-label">Content</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#1B3145"></div><div class="swatch-name">--color-content-100</div><div class="swatch-hex">#1B3145</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.65)"></div><div class="swatch-name">--color-content-65</div><div class="swatch-hex">65%</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.55)"></div><div class="swatch-name">--color-content-55</div><div class="swatch-hex">55%</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.45)"></div><div class="swatch-name">--color-content-45</div><div class="swatch-hex">45%</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.10)"></div><div class="swatch-name">--color-content-10</div><div class="swatch-hex">10%</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.04)"></div><div class="swatch-name">--color-content-4</div><div class="swatch-hex">4%</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-label">Status</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#1D875A"></div><div class="swatch-name">--color-success-default</div><div class="swatch-hex">#1D875A</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#EEF7F3"></div><div class="swatch-name">--color-success-light</div><div class="swatch-hex">#EEF7F3</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#066DF4"></div><div class="swatch-name">--color-info-default</div><div class="swatch-hex">#066DF4</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#E6F0FE"></div><div class="swatch-name">--color-info-light</div><div class="swatch-hex">#E6F0FE</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-label">Media</div>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-block" style="background:#F2FBEE"></div><div class="swatch-name">--color-lime-1</div><div class="swatch-hex">#F2FBEE</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#147C3D"></div><div class="swatch-name">--color-lime-9</div><div class="swatch-hex">#147C3D</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#FFE8E8"></div><div class="swatch-name">--color-red-1</div><div class="swatch-hex">#FFE8E8</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#650812"></div><div class="swatch-name">--color-red-9</div><div class="swatch-hex">#650812</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#FDE8FF"></div><div class="swatch-name">--color-magenta-1</div><div class="swatch-hex">#FDE8FF</div></div>
+            <div class="swatch"><div class="swatch-block" style="background:#5B106A"></div><div class="swatch-name">--color-magenta-8</div><div class="swatch-hex">#5B106A</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TYPOGRAPHY -->
+      <section class="section-card" id="typography">
+        <div class="text-h5">Typography</div>
+        <div class="col">
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-h5 — 24/28, 600</div>
+            <div class="text-h5">Heading 5 — Publisher's Space</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-h6 — 20/24, 600</div>
+            <div class="text-h6">Heading 6 — Add property</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p1 — 16/20, 400</div>
+            <div class="text-p1">Paragraph 1 — No items to display</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p2-bold — 14/18, 600</div>
+            <div class="text-p2-bold">Paragraph 2 Bold — Publisher</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p2-regular — 14/18, 400</div>
+            <div class="text-p2-regular">Paragraph 2 Regular — Onboard a new website or app to unlock advertising demand.</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p3-regular — 12/14, 400</div>
+            <div class="text-p3-regular">Paragraph 3 Regular — com.prismamedia.teleloisirs</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUTTONS -->
+      <section class="section-card" id="buttons">
+        <div class="text-h5">Buttons</div>
+        <div class="row-center" style="flex-wrap:wrap;gap:16px;">
+          <button class="btn btn-primary"><i class="ri-add-line"></i> Add property</button>
+          <button class="btn btn-secondary"><i class="ri-download-line"></i> Export</button>
+          <button class="btn btn-ghost"><i class="ri-filter-3-line"></i> Filter</button>
+          <button class="btn btn-disabled" disabled>Next</button>
+          <button class="btn btn-primary">Next</button>
+          <button class="btn btn-secondary">Back</button>
+          <button class="btn btn-primary">Create</button>
+          <button class="btn btn-secondary">Validate</button>
+        </div>
+      </section>
+
+      <!-- INPUTS -->
+      <section class="section-card" id="inputs">
+        <div class="text-h5">Inputs</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+          <div class="field">
+            <div class="field-label">Search</div>
+            <div class="input-wrap">
+              <i class="ri-search-line input-icon-left"></i>
+              <input class="input has-icon-left" type="text" placeholder="Property name, bundle, domain" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Publisher</div>
+            <div class="input-wrap">
+              <input class="input has-icon-right" type="text" placeholder="Select a publisher" readonly />
+              <i class="ri-arrow-down-s-line input-icon-right"></i>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Website URL</div>
+            <div class="input-wrap">
+              <input class="input" type="text" placeholder="e.g. https://www.washingtonpost.com" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Website name</div>
+            <div class="input-wrap">
+              <input class="input" type="text" placeholder="e.g. The Washington Post" />
+            </div>
+          </div>
+
+          <div class="field" style="grid-column:1/-1">
+            <div class="field-label">Website URL (with Validate button)</div>
+            <div class="input-btn-group">
+              <input class="input input-disabled" type="text" value="https://www.gala.fr" disabled />
+              <button class="btn-validate">Validate</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Disabled state</div>
+            <div class="input-wrap">
+              <input class="input input-disabled" type="text" value="Disabled value" disabled />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Filled state</div>
+            <div class="input-wrap">
+              <input class="input" type="text" value="Prisma Media" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DROPDOWN -->
+      <section class="section-card" id="dropdown">
+        <div class="text-h5">Dropdown</div>
+        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Shown open with "Prisma Media" selected.</p>
+        <div class="dropdown">
+          <div class="dropdown-item">Dotdash Meredith</div>
+          <div class="dropdown-item">Axel Springer</div>
+          <div class="dropdown-item">News Corp</div>
+          <div class="dropdown-item selected">Prisma Media</div>
+          <div class="dropdown-item">Future PLC</div>
+          <div class="dropdown-item">The New York Times</div>
+          <div class="dropdown-item">Daily Mail Group</div>
+          <div class="dropdown-item">Condé Nast</div>
+          <div class="dropdown-item">Tencent Media</div>
+          <div class="dropdown-item">Hachette Livre</div>
+        </div>
+      </section>
+
+      <!-- TYPE CARDS -->
+      <section class="section-card" id="typecards">
+        <div class="text-h5">Type Cards</div>
+        <div style="display:flex;gap:24px;max-width:480px;">
+          <div class="type-card" style="flex:1">
+            <i class="ri-apps-line"></i>
+            <span>App</span>
+          </div>
+          <div class="type-card selected" style="flex:1">
+            <i class="ri-global-line"></i>
+            <span>Website</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAGS -->
+      <section class="section-card" id="tags">
+        <div class="text-h5">Tags</div>
+        <div class="row-center">
+          <span class="tag tag-passed">Passed</span>
+          <span class="tag tag-failed">Failed</span>
+          <span class="tag tag-optimal">Optimal</span>
+          <span class="tag tag-not-optimal">Not optimal</span>
+        </div>
+      </section>
+
+      <!-- ALERTS -->
+      <section class="section-card" id="alerts">
+        <div class="text-h5">Alerts</div>
+        <div class="col" style="gap:16px;">
+          <div class="alert alert-info">
+            <i class="ri-information-line"></i>
+            <span>Validation reflects data at the time of creation. Follow-up changes are not automatically monitored.</span>
+          </div>
+          <div class="alert alert-success">
+            <i class="ri-checkbox-circle-line"></i>
+            <span>Domain meets all Ogury standards. Asset creation can proceed.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- METADATA CARD -->
+      <section class="section-card" id="metacard">
+        <div class="text-h5">Metadata Preview Card</div>
+        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Shown after URL auto-detection in the drawer.</p>
+        <div class="meta-card" style="max-width:380px;">
+          <div class="meta-favicon">G</div>
+          <div class="meta-info">
+            <span class="text-p2-regular">Gala.fr</span>
+            <span class="text-p3-regular" style="color:var(--color-content-65)">com.prismamedia.teleloisirs</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALIDATION CRITERIA -->
+      <section class="section-card" id="validation">
+        <div class="text-h5">Validation Criteria List</div>
+        <div class="criteria-list">
+          <div class="criteria-row">
+            <span class="text-p2-regular">Brand safety</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="text-p2-regular">IVT</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="text-p2-regular">MFA</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOAST -->
+      <section class="section-card" id="toast">
+        <div class="text-h5">Toast Notification</div>
+        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Appears top-left of content area after property creation.</p>
+        <div class="toast">
+          <i class="ri-checkbox-circle-line"></i>
+          <span class="text-p2-regular">The property has been successfully created</span>
+        </div>
+      </section>
+
+      <!-- AVATAR -->
+      <section class="section-card" id="avatar">
+        <div class="text-h5">Avatar</div>
+        <div class="row-center">
+          <div class="avatar">RM</div>
+          <div class="col" style="gap:2px;">
+            <span class="text-p2-bold">Rachid M'halla</span>
+            <span class="text-p3-regular" style="color:var(--color-content-65)">Ogury</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDENAV -->
+      <section class="section-card" id="sidenav">
+        <div class="text-h5">Sidenav</div>
+        <p class="text-p2-regular" style="margin-bottom:24px;color:var(--color-content-65);">"Properties" is the active item. All sections expanded.</p>
+
+        <div class="sidenav">
+          <!-- Logo -->
+          <div>
+            <div class="sidenav-logo">ogury <span>one</span></div>
+
+            <!-- Nav -->
+            <nav class="sidenav-nav">
+
+              <!-- Publisher's Space -->
+              <div class="nav-group">
+                <div class="nav-level1 active">
+                  <i class="ri-building-line nav-icon"></i>
+                  <span class="nav-level1-label">Publisher's Space</span>
+                  <i class="ri-arrow-up-s-line nav-chevron"></i>
+                </div>
+                <div class="nav-children">
+                  <a class="nav-level2" href="#">Publishers</a>
+                  <a class="nav-level2 active" href="#">Properties</a>
+                  <a class="nav-level2" href="#">Placements</a>
+                  <a class="nav-level2" href="#">Rules</a>
+                </div>
+              </div>
+
+              <!-- Reporting -->
+              <div class="nav-group">
+                <div class="nav-level1">
+                  <i class="ri-line-chart-line nav-icon"></i>
+                  <span class="nav-level1-label">Reporting</span>
+                  <i class="ri-arrow-up-s-line nav-chevron"></i>
+                </div>
+                <div class="nav-children">
+                  <a class="nav-level2" href="#">Health Index</a>
+                </div>
+              </div>
+
+              <!-- Settings -->
+              <div class="nav-group">
+                <div class="nav-level1">
+                  <i class="ri-settings-3-line nav-icon"></i>
+                  <span class="nav-level1-label">Settings</span>
+                  <i class="ri-arrow-up-s-line nav-chevron"></i>
+                </div>
+                <div class="nav-children">
+                  <a class="nav-level2" href="#">Users</a>
+                </div>
+              </div>
+
+            </nav>
+          </div>
+
+          <!-- Bottom -->
+          <div class="sidenav-bottom">
+            <div class="sidenav-user">
+              <div class="avatar">RM</div>
+              <div class="sidenav-user-info">
+                <span class="text-p2-bold">Rachid M'halla</span>
+                <span class="text-p3-regular" style="color:var(--color-content-65)">Ogury</span>
+              </div>
+            </div>
+            <div class="sidenav-collapse">
+              <button class="btn-icon"><i class="ri-arrow-left-s-line"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Smooth scroll for sidebar links
+    document.querySelectorAll('.showcase-sidebar a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Highlight active sidebar link on scroll
+    const sections = document.querySelectorAll('.section-card');
+    const links = document.querySelectorAll('.showcase-sidebar a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.style.background = '');
+          links.forEach(l => l.style.color = '');
+          const active = document.querySelector(`.showcase-sidebar a[href="#${entry.target.id}"]`);
+          if (active) {
+            active.style.background = 'var(--color-secondary-light)';
+            active.style.color = 'var(--color-secondary-default)';
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
