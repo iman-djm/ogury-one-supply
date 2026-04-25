@@ -8,46 +8,64 @@
   <style>
     /* ─── TOKENS ─────────────────────────────────────────── */
     :root {
-      --color-brand-primary: #003B63;
-      --color-brand-secondary: #0077C7;
-      --color-secondary-default: #0077C7;
-      --color-secondary-light: #E6F4FF;
-      --color-secondary-dark: #005A96;
-      --color-primary-default: #003B63;
-      --color-white: #FFFFFF;
-      --color-neutral-100: #F6F6F9;
-      --color-neutral-200: #CDD4DF;
-      --color-content-100: #1B3145;
-      --color-content-65: rgba(27,49,69,0.65);
-      --color-content-55: rgba(27,49,69,0.55);
-      --color-content-45: rgba(27,49,69,0.45);
-      --color-content-10: rgba(27,49,69,0.10);
-      --color-content-4: rgba(27,49,69,0.04);
-      --color-overlay-40: rgba(0,0,0,0.4);
-      --color-success-default: #1D875A;
-      --color-success-light: #EEF7F3;
-      --color-info-default: #066DF4;
-      --color-info-light: #E6F0FE;
-      --color-lime-1: #F2FBEE;
-      --color-lime-9: #147C3D;
-      --color-red-1: #FFE8E8;
-      --color-red-9: #650812;
-      --color-magenta-1: #FDE8FF;
-      --color-magenta-8: #5B106A;
-      --shadow-elevation-2: 0px 8px 10px rgba(109,91,91,0.05),
-                            0px 0.71px 2.82px rgba(109,91,91,0.03),
-                            0px 0.13px 1px rgba(109,91,91,0.02),
-                            0px 0.41px 0.72px rgba(109,91,91,0.01);
-      --shadow-elevation-3: 0px 9px 16px rgba(109,91,91,0.10),
-                            0px 1.71px 4.82px rgba(109,91,91,0.05),
-                            0px 1.13px 2px rgba(109,91,91,0.02),
-                            0px 0.41px 0.72px rgba(109,91,91,0.01);
-      --shadow-button-primary: 0px 5px 7px rgba(0,59,99,0.20);
+      /* ─── BRAND ─────────────────────────────────────────── */
+      --brand-primary-blue: #003B63;
+      --brand-tertiary-green: #0A9999;
+
+      /* ─── INTERFACE / MAIN ──────────────────────────────── */
+      --interface-main-primary-500: #003B63;
+      --interface-main-secondary-200: #E6F4FF;
+      --interface-main-secondary-500: #0077C7;
+      --interface-main-secondary-600: #005A96;
+
+      /* ─── INTERFACE / NEUTRALS ──────────────────────────── */
+      --interface-neutrals-white: #FFFFFF;
+      --interface-neutrals-neutral-100: #F6F6F9;
+      --interface-neutrals-neutral-200: #CDD4DF;
+      --interface-neutrals-black-0: rgba(0, 0, 0, 0);
+      --interface-neutrals-black-40: rgba(0, 0, 0, 0.4);
+      --interface-neutrals-content-100: #1B3145;
+      --interface-neutrals-content-65: rgba(27, 49, 69, 0.65);
+      --interface-neutrals-content-55: rgba(27, 49, 69, 0.55);
+      --interface-neutrals-content-45: rgba(27, 49, 69, 0.45);
+      --interface-neutrals-content-10: rgba(27, 49, 69, 0.10);
+      --interface-neutrals-content-4: rgba(27, 49, 69, 0.04);
+
+      /* ─── INTERFACE / STATUS ────────────────────────────── */
+      --interface-status-success-default: #1D875A;
+      --interface-status-success-light: #EEF7F3;
+      --interface-status-info-default: #066DF4;
+      --interface-status-info-light: #E6F0FE;
+
+      /* ─── MEDIA ─────────────────────────────────────────── */
+      --media-magenta-magenta1: #FDE8FF;
+      --media-magenta-magenta8: #5B106A;
+      --media-lime-lime1: #F2FBEE;
+      --media-lime-lime9: #147C3D;
+      --media-dust-red-red1: #FFE8E8;
+      --media-dust-red-red9: #650812;
+
+      /* ─── ELEVATIONS ────────────────────────────────────── */
+      --elevations-elevation-2:
+        0px 8px 10px rgba(109, 91, 91, 0.05),
+        0px 0.71px 2.82px rgba(109, 91, 91, 0.03),
+        0px 0.13px 1px rgba(109, 91, 91, 0.02),
+        0px 0.41px 0.72px rgba(109, 91, 91, 0.01);
+      --elevations-elevation-3:
+        0px 9px 16px rgba(109, 91, 91, 0.10),
+        0px 1.71px 4.82px rgba(109, 91, 91, 0.05),
+        0px 1.13px 2px rgba(109, 91, 91, 0.02),
+        0px 0.41px 0.72px rgba(109, 91, 91, 0.01);
+      --effects-button-primary-effect: 0px 5px 7px rgba(0, 59, 99, 0.20);
+
+      /* ─── RADII ─────────────────────────────────────────── */
       --radius-sm: 4px;
       --radius-md: 8px;
       --radius-lg: 20px;
-      --space-4: 4px;
-      --space-8: 8px;
+
+      /* ─── SPACING ───────────────────────────────────────── */
+      --space-4:  4px;
+      --space-8:  8px;
       --space-12: 12px;
       --space-16: 16px;
       --space-24: 24px;
@@ -57,26 +75,26 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'PP Telegraf', system-ui, sans-serif;
-      color: var(--color-content-100);
-      background: var(--color-neutral-100);
+      color: var(--interface-neutrals-content-100);
+      background: var(--interface-neutrals-neutral-100);
       display: flex;
       min-height: 100vh;
     }
 
     /* ─── TYPOGRAPHY ─────────────────────────────────────── */
-    .text-h5  { font-size: 24px; line-height: 28px; font-weight: 600; }
-    .text-h6  { font-size: 20px; line-height: 24px; font-weight: 600; }
-    .text-p1  { font-size: 16px; line-height: 20px; font-weight: 400; }
-    .text-p2-bold    { font-size: 14px; line-height: 18px; font-weight: 600; }
-    .text-p2-regular { font-size: 14px; line-height: 18px; font-weight: 400; }
-    .text-p3-regular { font-size: 12px; line-height: 14px; font-weight: 400; }
+    .title-h5-strong       { font-size: 24px; line-height: 28px; font-weight: 600; }
+    .title-h6-strong       { font-size: 20px; line-height: 24px; font-weight: 600; }
+    .paragraph-p1-regular  { font-size: 16px; line-height: 20px; font-weight: 400; }
+    .paragraph-p2-bold     { font-size: 14px; line-height: 18px; font-weight: 600; }
+    .paragraph-p2-regular  { font-size: 14px; line-height: 18px; font-weight: 400; }
+    .paragraph-p3-regular  { font-size: 12px; line-height: 14px; font-weight: 400; }
 
     /* ─── SIDEBAR ────────────────────────────────────────── */
     .showcase-sidebar {
       width: 200px;
       flex-shrink: 0;
-      background: var(--color-neutral-100);
-      border-right: 1px solid var(--color-neutral-200);
+      background: var(--interface-neutrals-neutral-100);
+      border-right: 1px solid var(--interface-neutrals-neutral-200);
       position: sticky;
       top: 0;
       height: 100vh;
@@ -88,7 +106,7 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--color-content-45);
+      color: var(--interface-neutrals-content-45);
       margin-bottom: 12px;
     }
     .showcase-sidebar a {
@@ -97,13 +115,13 @@
       border-radius: var(--radius-sm);
       font-size: 13px;
       line-height: 16px;
-      color: var(--color-content-65);
+      color: var(--interface-neutrals-content-65);
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
     }
     .showcase-sidebar a:hover {
-      background: var(--color-secondary-light);
-      color: var(--color-secondary-default);
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
     }
 
     /* ─── MAIN CONTENT ───────────────────────────────────── */
@@ -121,15 +139,15 @@
 
     /* Section card */
     .section-card {
-      background: var(--color-white);
+      background: var(--interface-neutrals-white);
       border-radius: var(--radius-md);
       padding: 32px;
-      box-shadow: var(--shadow-elevation-2);
+      box-shadow: var(--elevations-elevation-2);
     }
-    .section-card > .text-h5 {
+    .section-card > .title-h5-strong {
       margin-bottom: 24px;
       padding-bottom: 16px;
-      border-bottom: 1px solid var(--color-neutral-200);
+      border-bottom: 1px solid var(--interface-neutrals-neutral-200);
     }
 
     /* Row helpers */
@@ -158,27 +176,27 @@
     .btn i { font-size: 18px; }
 
     .btn-primary {
-      background: var(--color-primary-default);
-      color: var(--color-white);
-      box-shadow: var(--shadow-button-primary);
+      background: var(--interface-main-primary-500);
+      color: var(--interface-neutrals-white);
+      box-shadow: var(--effects-button-primary-effect);
     }
     .btn-primary:hover { opacity: 0.88; }
 
     .btn-secondary {
-      background: var(--color-secondary-light);
-      color: var(--color-secondary-dark);
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-600);
     }
     .btn-secondary:hover { opacity: 0.82; }
 
     .btn-ghost {
       background: transparent;
-      color: var(--color-secondary-dark);
+      color: var(--interface-main-secondary-600);
     }
-    .btn-ghost:hover { background: var(--color-secondary-light); }
+    .btn-ghost:hover { background: var(--interface-main-secondary-200); }
 
     .btn-disabled, .btn:disabled {
-      background: var(--color-content-4);
-      color: var(--color-content-55);
+      background: var(--interface-neutrals-content-4);
+      color: var(--interface-neutrals-content-55);
       box-shadow: none;
       cursor: not-allowed;
       pointer-events: none;
@@ -190,21 +208,21 @@
       font-size: 14px;
       line-height: 18px;
       font-weight: 600;
-      color: var(--color-content-65);
+      color: var(--interface-neutrals-content-65);
     }
     .input-wrap { position: relative; display: flex; align-items: center; }
     .input-icon-left {
       position: absolute;
       left: 12px;
       font-size: 18px;
-      color: var(--color-content-45);
+      color: var(--interface-neutrals-content-45);
       pointer-events: none;
     }
     .input-icon-right {
       position: absolute;
       right: 12px;
       font-size: 18px;
-      color: var(--color-content-45);
+      color: var(--interface-neutrals-content-45);
       pointer-events: none;
       cursor: pointer;
     }
@@ -212,25 +230,25 @@
       width: 100%;
       height: 40px;
       padding: 7px 12px;
-      border: 1px solid var(--color-neutral-200);
+      border: 1px solid var(--interface-neutrals-neutral-200);
       border-radius: var(--radius-md);
-      background: var(--color-white);
+      background: var(--interface-neutrals-white);
       font-family: inherit;
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
-      color: var(--color-content-100);
+      color: var(--interface-neutrals-content-100);
       outline: none;
       transition: border-color 0.15s;
     }
-    .input::placeholder { color: var(--color-content-45); }
-    .input:focus { border-color: var(--color-secondary-default); }
+    .input::placeholder { color: var(--interface-neutrals-content-45); }
+    .input:focus { border-color: var(--interface-main-secondary-500); }
     .input.has-icon-left { padding-left: 38px; }
     .input.has-icon-right { padding-right: 38px; }
     .input.input-disabled {
-      background: var(--color-content-4);
-      border-color: var(--color-content-10);
-      color: var(--color-content-55);
+      background: var(--interface-neutrals-content-4);
+      border-color: var(--interface-neutrals-content-10);
+      color: var(--interface-neutrals-content-55);
       cursor: not-allowed;
     }
 
@@ -244,9 +262,9 @@
     .input-btn-group .btn-validate {
       height: 40px;
       padding: 0 16px;
-      background: var(--color-secondary-light);
-      color: var(--color-secondary-dark);
-      border: 1px solid var(--color-neutral-200);
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-600);
+      border: 1px solid var(--interface-neutrals-neutral-200);
       border-left: none;
       border-radius: 0 var(--radius-md) var(--radius-md) 0;
       font-family: inherit;
@@ -261,10 +279,10 @@
     /* ─── DROPDOWN ───────────────────────────────────────── */
     .dropdown {
       width: 250px;
-      background: var(--color-white);
-      border: 1px solid var(--color-neutral-200);
+      background: var(--interface-neutrals-white);
+      border: 1px solid var(--interface-neutrals-neutral-200);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-elevation-3);
+      box-shadow: var(--elevations-elevation-3);
       padding: 16px;
       max-height: 256px;
       overflow-y: auto;
@@ -272,7 +290,7 @@
     .dropdown::-webkit-scrollbar { width: 8px; }
     .dropdown::-webkit-scrollbar-track { background: transparent; }
     .dropdown::-webkit-scrollbar-thumb {
-      background: var(--color-content-45);
+      background: var(--interface-neutrals-content-45);
       border-radius: 4px;
     }
     .dropdown-item {
@@ -281,14 +299,14 @@
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
-      color: var(--color-content-100);
+      color: var(--interface-neutrals-content-100);
       cursor: pointer;
       transition: background 0.12s;
     }
-    .dropdown-item:hover { background: var(--color-neutral-100); }
+    .dropdown-item:hover { background: var(--interface-neutrals-neutral-100); }
     .dropdown-item.selected {
-      background: var(--color-secondary-light);
-      color: var(--color-secondary-default);
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
       font-weight: 600;
     }
 
@@ -298,21 +316,21 @@
       align-items: center;
       gap: 16px;
       padding: 16px;
-      border: 1px solid var(--color-neutral-200);
+      border: 1px solid var(--interface-neutrals-neutral-200);
       border-radius: var(--radius-md);
-      background: var(--color-white);
+      background: var(--interface-neutrals-white);
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
     }
-    .type-card i { font-size: 16px; color: var(--color-content-65); }
+    .type-card i { font-size: 16px; color: var(--interface-neutrals-content-65); }
     .type-card.selected {
-      background: var(--color-secondary-light);
-      border-color: var(--color-secondary-default);
+      background: var(--interface-main-secondary-200);
+      border-color: var(--interface-main-secondary-500);
     }
-    .type-card.selected i { color: var(--color-secondary-default); }
+    .type-card.selected i { color: var(--interface-main-secondary-500); }
 
     /* ─── TAGS ───────────────────────────────────────────── */
     .tag {
@@ -324,12 +342,12 @@
       font-weight: 400;
     }
     .tag-passed, .tag-optimal {
-      background: var(--color-lime-1);
-      color: var(--color-lime-9);
+      background: var(--media-lime-lime1);
+      color: var(--media-lime-lime9);
     }
     .tag-failed, .tag-not-optimal {
-      background: var(--color-red-1);
-      color: var(--color-red-9);
+      background: var(--media-dust-red-red1);
+      color: var(--media-dust-red-red9);
     }
 
     /* ─── ALERTS ─────────────────────────────────────────── */
@@ -342,20 +360,20 @@
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
-      color: var(--color-content-100);
+      color: var(--interface-neutrals-content-100);
     }
     .alert i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    .alert-info { background: var(--color-info-light); }
-    .alert-info i { color: var(--color-info-default); }
-    .alert-success { background: var(--color-success-light); }
-    .alert-success i { color: var(--color-success-default); }
+    .alert-info { background: var(--interface-status-info-light); }
+    .alert-info i { color: var(--interface-status-info-default); }
+    .alert-success { background: var(--interface-status-success-light); }
+    .alert-success i { color: var(--interface-status-success-default); }
 
     /* ─── METADATA CARD ──────────────────────────────────── */
     .meta-card {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: var(--color-neutral-100);
+      background: var(--interface-neutrals-neutral-100);
       border-radius: var(--radius-md);
       padding: 16px;
     }
@@ -363,14 +381,14 @@
       width: 36px;
       height: 36px;
       border-radius: var(--radius-sm);
-      background: var(--color-neutral-200);
+      background: var(--interface-neutrals-neutral-200);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-content-65);
+      color: var(--interface-neutrals-content-65);
     }
     .meta-info { display: flex; flex-direction: column; gap: 2px; }
 
@@ -391,28 +409,28 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--color-white);
-      box-shadow: var(--shadow-elevation-3);
+      background: var(--interface-neutrals-white);
+      box-shadow: var(--elevations-elevation-3);
       border-radius: var(--radius-md);
       padding: 16px;
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
     }
-    .toast i { font-size: 16px; color: var(--color-success-default); }
+    .toast i { font-size: 16px; color: var(--interface-status-success-default); }
 
     /* ─── AVATAR ─────────────────────────────────────────── */
     .avatar {
       width: 32px;
       height: 32px;
       border-radius: var(--radius-sm);
-      background: var(--color-magenta-1);
+      background: var(--media-magenta-magenta1);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-magenta-8);
+      color: var(--media-magenta-magenta8);
       flex-shrink: 0;
     }
 
@@ -420,13 +438,13 @@
     .sidenav {
       width: 250px;
       height: 600px;
-      background: var(--color-neutral-100);
+      background: var(--interface-neutrals-neutral-100);
       padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       border-radius: var(--radius-md);
-      border: 1px solid var(--color-neutral-200);
+      border: 1px solid var(--interface-neutrals-neutral-200);
       flex-shrink: 0;
     }
     .sidenav-logo {
@@ -436,13 +454,13 @@
       justify-content: center;
       font-size: 20px;
       font-weight: 400;
-      color: var(--color-brand-secondary);
+      color: var(--interface-main-secondary-500);
       letter-spacing: -0.01em;
     }
     .sidenav-logo span { font-weight: 700; }
     .sidenav-nav { display: flex; flex-direction: column; gap: 8px; }
     .nav-group {
-      background: var(--color-white);
+      background: var(--interface-neutrals-white);
       border-radius: var(--radius-md);
       overflow: hidden;
     }
@@ -454,17 +472,17 @@
       cursor: pointer;
       border-radius: var(--radius-md);
     }
-    .nav-level1 i.nav-icon { font-size: 24px; color: var(--color-content-65); }
-    .nav-level1.active i.nav-icon { color: var(--color-secondary-default); }
+    .nav-level1 i.nav-icon { font-size: 24px; color: var(--interface-neutrals-content-65); }
+    .nav-level1.active i.nav-icon { color: var(--interface-main-secondary-500); }
     .nav-level1-label {
       flex: 1;
       font-size: 14px;
       line-height: 18px;
       font-weight: 600;
-      color: var(--color-content-100);
+      color: var(--interface-neutrals-content-100);
     }
-    .nav-level1.active .nav-level1-label { color: var(--color-secondary-default); }
-    .nav-level1 i.nav-chevron { font-size: 16px; color: var(--color-content-45); }
+    .nav-level1.active .nav-level1-label { color: var(--interface-main-secondary-500); }
+    .nav-level1 i.nav-chevron { font-size: 16px; color: var(--interface-neutrals-content-45); }
     .nav-children { padding: 0 4px 4px 4px; }
     .nav-level2 {
       display: block;
@@ -473,28 +491,24 @@
       font-size: 14px;
       line-height: 18px;
       font-weight: 400;
-      color: var(--color-content-65);
+      color: var(--interface-neutrals-content-65);
       cursor: pointer;
       text-decoration: none;
       transition: background 0.12s, color 0.12s;
     }
-    .nav-level2:hover { background: var(--color-neutral-100); color: var(--color-content-100); }
+    .nav-level2:hover {
+      background: var(--interface-neutrals-neutral-100);
+      color: var(--interface-neutrals-content-100);
+    }
     .nav-level2.active {
-      background: var(--color-secondary-light);
-      color: var(--color-secondary-default);
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
       font-weight: 600;
     }
     .sidenav-bottom { display: flex; flex-direction: column; gap: 12px; }
-    .sidenav-user {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .sidenav-user { display: flex; align-items: center; gap: 8px; }
     .sidenav-user-info { display: flex; flex-direction: column; }
-    .sidenav-collapse {
-      display: flex;
-      justify-content: flex-end;
-    }
+    .sidenav-collapse { display: flex; justify-content: flex-end; }
     .btn-icon {
       width: 32px;
       height: 32px;
@@ -505,24 +519,18 @@
       border: none;
       background: transparent;
       cursor: pointer;
-      color: var(--color-content-65);
+      color: var(--interface-neutrals-content-65);
       transition: background 0.12s;
     }
-    .btn-icon:hover { background: var(--color-secondary-light); color: var(--color-secondary-default); }
+    .btn-icon:hover {
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
+    }
     .btn-icon i { font-size: 24px; }
 
     /* ─── COLOR SWATCHES ─────────────────────────────────── */
-    .swatch-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .swatch {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-start;
-    }
+    .swatch-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .swatch { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
     .swatch-block {
       width: 64px;
       height: 40px;
@@ -532,25 +540,33 @@
     .swatch-name {
       font-size: 11px;
       line-height: 14px;
-      color: var(--color-content-65);
-      max-width: 100px;
+      color: var(--interface-neutrals-content-65);
+      max-width: 120px;
       word-break: break-all;
     }
     .swatch-hex {
       font-size: 11px;
       font-weight: 600;
-      color: var(--color-content-100);
+      color: var(--interface-neutrals-content-100);
+    }
+
+    /* Shadow swatches */
+    .swatch-shadow {
+      width: 80px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      background: var(--interface-neutrals-white);
     }
 
     /* ─── SUBSECTION ─────────────────────────────────────── */
-    .subsection { margin-bottom: 24px; }
+    .subsection { margin-bottom: 28px; }
     .subsection:last-child { margin-bottom: 0; }
     .subsection-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--color-content-45);
+      letter-spacing: 0.08em;
+      color: var(--interface-neutrals-content-45);
       margin-bottom: 12px;
     }
   </style>
@@ -581,103 +597,246 @@
 
       <!-- COLORS -->
       <section class="section-card" id="colors">
-        <div class="text-h5">Colors</div>
+        <div class="title-h5-strong">Colors</div>
 
+        <!-- Group 1: Brand -->
         <div class="subsection">
           <div class="subsection-label">Brand</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#003B63"></div><div class="swatch-name">--color-brand-primary</div><div class="swatch-hex">#003B63</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#0077C7"></div><div class="swatch-name">--color-brand-secondary</div><div class="swatch-hex">#0077C7</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#003B63"></div>
+              <div class="swatch-name">Brand/PrimaryBlue</div>
+              <div class="swatch-hex">#003B63</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#0A9999"></div>
+              <div class="swatch-name">Brand/TertiaryGreen</div>
+              <div class="swatch-hex">#0A9999</div>
+            </div>
           </div>
         </div>
 
+        <!-- Group 2: Interface/Main -->
         <div class="subsection">
-          <div class="subsection-label">Secondary</div>
+          <div class="subsection-label">Interface / Main</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#0077C7"></div><div class="swatch-name">--color-secondary-default</div><div class="swatch-hex">#0077C7</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#E6F4FF"></div><div class="swatch-name">--color-secondary-light</div><div class="swatch-hex">#E6F4FF</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#005A96"></div><div class="swatch-name">--color-secondary-dark</div><div class="swatch-hex">#005A96</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#003B63"></div>
+              <div class="swatch-name">Interface/Main/primary-500</div>
+              <div class="swatch-hex">#003B63</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#E6F4FF"></div>
+              <div class="swatch-name">Interface/Main/secondary-200</div>
+              <div class="swatch-hex">#E6F4FF</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#0077C7"></div>
+              <div class="swatch-name">Interface/Main/secondary-500</div>
+              <div class="swatch-hex">#0077C7</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#005A96"></div>
+              <div class="swatch-name">Interface/Main/secondary-600</div>
+              <div class="swatch-hex">#005A96</div>
+            </div>
           </div>
         </div>
 
+        <!-- Group 3: Interface/Neutrals -->
         <div class="subsection">
-          <div class="subsection-label">Neutrals</div>
+          <div class="subsection-label">Interface / Neutrals</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#FFFFFF"></div><div class="swatch-name">--color-white</div><div class="swatch-hex">#FFFFFF</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#F6F6F9"></div><div class="swatch-name">--color-neutral-100</div><div class="swatch-hex">#F6F6F9</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#CDD4DF"></div><div class="swatch-name">--color-neutral-200</div><div class="swatch-hex">#CDD4DF</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#FFFFFF"></div>
+              <div class="swatch-name">Interface/Neutrals/white</div>
+              <div class="swatch-hex">#FFFFFF</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#F6F6F9"></div>
+              <div class="swatch-name">Interface/Neutrals/neutral-100</div>
+              <div class="swatch-hex">#F6F6F9</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#CDD4DF"></div>
+              <div class="swatch-name">Interface/Neutrals/neutral-200</div>
+              <div class="swatch-hex">#CDD4DF</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#1B3145"></div>
+              <div class="swatch-name">Interface/Neutrals/content-100</div>
+              <div class="swatch-hex">#1B3145</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(27,49,69,0.65)"></div>
+              <div class="swatch-name">Interface/Neutrals/content-65</div>
+              <div class="swatch-hex">rgba(27,49,69,.65)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(27,49,69,0.55)"></div>
+              <div class="swatch-name">Interface/Neutrals/content-55</div>
+              <div class="swatch-hex">rgba(27,49,69,.55)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(27,49,69,0.45)"></div>
+              <div class="swatch-name">Interface/Neutrals/content-45</div>
+              <div class="swatch-hex">rgba(27,49,69,.45)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(27,49,69,0.10)"></div>
+              <div class="swatch-name">Interface/Neutrals/content-10</div>
+              <div class="swatch-hex">rgba(27,49,69,.10)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(27,49,69,0.04)"></div>
+              <div class="swatch-name">Interface/Neutrals/content-4</div>
+              <div class="swatch-hex">rgba(27,49,69,.04)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(0,0,0,0)"></div>
+              <div class="swatch-name">Interface/Neutrals/black-0</div>
+              <div class="swatch-hex">rgba(0,0,0,0)</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:rgba(0,0,0,0.4)"></div>
+              <div class="swatch-name">Interface/Neutrals/black-40</div>
+              <div class="swatch-hex">rgba(0,0,0,.4)</div>
+            </div>
           </div>
         </div>
 
+        <!-- Group 4: Interface/Status -->
         <div class="subsection">
-          <div class="subsection-label">Content</div>
+          <div class="subsection-label">Interface / Status</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#1B3145"></div><div class="swatch-name">--color-content-100</div><div class="swatch-hex">#1B3145</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.65)"></div><div class="swatch-name">--color-content-65</div><div class="swatch-hex">65%</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.55)"></div><div class="swatch-name">--color-content-55</div><div class="swatch-hex">55%</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.45)"></div><div class="swatch-name">--color-content-45</div><div class="swatch-hex">45%</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.10)"></div><div class="swatch-name">--color-content-10</div><div class="swatch-hex">10%</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:rgba(27,49,69,0.04)"></div><div class="swatch-name">--color-content-4</div><div class="swatch-hex">4%</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#1D875A"></div>
+              <div class="swatch-name">Interface/Status/success-default</div>
+              <div class="swatch-hex">#1D875A</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#EEF7F3"></div>
+              <div class="swatch-name">Interface/Status/success-light</div>
+              <div class="swatch-hex">#EEF7F3</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#066DF4"></div>
+              <div class="swatch-name">Interface/Status/info-default</div>
+              <div class="swatch-hex">#066DF4</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#E6F0FE"></div>
+              <div class="swatch-name">Interface/Status/info-light</div>
+              <div class="swatch-hex">#E6F0FE</div>
+            </div>
           </div>
         </div>
 
+        <!-- Group 5: Media/Magenta -->
         <div class="subsection">
-          <div class="subsection-label">Status</div>
+          <div class="subsection-label">Media / Magenta</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#1D875A"></div><div class="swatch-name">--color-success-default</div><div class="swatch-hex">#1D875A</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#EEF7F3"></div><div class="swatch-name">--color-success-light</div><div class="swatch-hex">#EEF7F3</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#066DF4"></div><div class="swatch-name">--color-info-default</div><div class="swatch-hex">#066DF4</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#E6F0FE"></div><div class="swatch-name">--color-info-light</div><div class="swatch-hex">#E6F0FE</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#FDE8FF"></div>
+              <div class="swatch-name">Media/Magenta/Magenta1</div>
+              <div class="swatch-hex">#FDE8FF</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#5B106A"></div>
+              <div class="swatch-name">Media/Magenta/Magenta8</div>
+              <div class="swatch-hex">#5B106A</div>
+            </div>
           </div>
         </div>
 
+        <!-- Group 6: Media/Lime -->
         <div class="subsection">
-          <div class="subsection-label">Media</div>
+          <div class="subsection-label">Media / Lime</div>
           <div class="swatch-grid">
-            <div class="swatch"><div class="swatch-block" style="background:#F2FBEE"></div><div class="swatch-name">--color-lime-1</div><div class="swatch-hex">#F2FBEE</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#147C3D"></div><div class="swatch-name">--color-lime-9</div><div class="swatch-hex">#147C3D</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#FFE8E8"></div><div class="swatch-name">--color-red-1</div><div class="swatch-hex">#FFE8E8</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#650812"></div><div class="swatch-name">--color-red-9</div><div class="swatch-hex">#650812</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#FDE8FF"></div><div class="swatch-name">--color-magenta-1</div><div class="swatch-hex">#FDE8FF</div></div>
-            <div class="swatch"><div class="swatch-block" style="background:#5B106A"></div><div class="swatch-name">--color-magenta-8</div><div class="swatch-hex">#5B106A</div></div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#F2FBEE"></div>
+              <div class="swatch-name">Media/Lime/Lime1</div>
+              <div class="swatch-hex">#F2FBEE</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#147C3D"></div>
+              <div class="swatch-name">Media/Lime/Lime9</div>
+              <div class="swatch-hex">#147C3D</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 7: Media/Dust Red -->
+        <div class="subsection">
+          <div class="subsection-label">Media / Dust Red</div>
+          <div class="swatch-grid">
+            <div class="swatch">
+              <div class="swatch-block" style="background:#FFE8E8"></div>
+              <div class="swatch-name">Media/Dust Red/Red1</div>
+              <div class="swatch-hex">#FFE8E8</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#650812"></div>
+              <div class="swatch-name">Media/Dust Red/Red9</div>
+              <div class="swatch-hex">#650812</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 8: Elevations & Effects -->
+        <div class="subsection">
+          <div class="subsection-label">Elevations &amp; Effects</div>
+          <div class="swatch-grid">
+            <div class="swatch">
+              <div class="swatch-shadow" style="box-shadow:0px 8px 10px rgba(109,91,91,0.05),0px 0.71px 2.82px rgba(109,91,91,0.03),0px 0.13px 1px rgba(109,91,91,0.02),0px 0.41px 0.72px rgba(109,91,91,0.01)"></div>
+              <div class="swatch-name">Elevations/Elevation-2</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-shadow" style="box-shadow:0px 9px 16px rgba(109,91,91,0.10),0px 1.71px 4.82px rgba(109,91,91,0.05),0px 1.13px 2px rgba(109,91,91,0.02),0px 0.41px 0.72px rgba(109,91,91,0.01)"></div>
+              <div class="swatch-name">Elevations/Elevation-3</div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-shadow" style="box-shadow:0px 5px 7px rgba(0,59,99,0.20)"></div>
+              <div class="swatch-name">Effects/Button-Primary-Effect</div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- TYPOGRAPHY -->
       <section class="section-card" id="typography">
-        <div class="text-h5">Typography</div>
+        <div class="title-h5-strong">Typography</div>
         <div class="col">
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-h5 — 24/28, 600</div>
-            <div class="text-h5">Heading 5 — Publisher's Space</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Title/H5-Strong — 24px / 28px / 600</div>
+            <div class="title-h5-strong">Publisher's Space</div>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-h6 — 20/24, 600</div>
-            <div class="text-h6">Heading 6 — Add property</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Title/H6-Strong — 20px / 24px / 600</div>
+            <div class="title-h6-strong">Add property</div>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p1 — 16/20, 400</div>
-            <div class="text-p1">Paragraph 1 — No items to display</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Paragraph/P1-Regular — 16px / 20px / 400</div>
+            <div class="paragraph-p1-regular">No items to display</div>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p2-bold — 14/18, 600</div>
-            <div class="text-p2-bold">Paragraph 2 Bold — Publisher</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Paragraph/P2-Bold — 14px / 18px / 600</div>
+            <div class="paragraph-p2-bold">Publisher</div>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p2-regular — 14/18, 400</div>
-            <div class="text-p2-regular">Paragraph 2 Regular — Onboard a new website or app to unlock advertising demand.</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Paragraph/P2-Regular — 14px / 18px / 400</div>
+            <div class="paragraph-p2-regular">Onboard a new website or app to unlock advertising demand.</div>
           </div>
           <div>
-            <div style="font-size:11px;color:var(--color-content-45);margin-bottom:4px;">.text-p3-regular — 12/14, 400</div>
-            <div class="text-p3-regular">Paragraph 3 Regular — com.prismamedia.teleloisirs</div>
+            <div style="font-size:11px;color:var(--interface-neutrals-content-45);margin-bottom:4px;">Paragraph/P3-Regular — 12px / 14px / 400</div>
+            <div class="paragraph-p3-regular">com.prismamedia.teleloisirs</div>
           </div>
         </div>
       </section>
 
       <!-- BUTTONS -->
       <section class="section-card" id="buttons">
-        <div class="text-h5">Buttons</div>
+        <div class="title-h5-strong">Buttons</div>
         <div class="row-center" style="flex-wrap:wrap;gap:16px;">
           <button class="btn btn-primary"><i class="ri-add-line"></i> Add property</button>
           <button class="btn btn-secondary"><i class="ri-download-line"></i> Export</button>
@@ -692,7 +851,7 @@
 
       <!-- INPUTS -->
       <section class="section-card" id="inputs">
-        <div class="text-h5">Inputs</div>
+        <div class="title-h5-strong">Inputs</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
 
           <div class="field">
@@ -752,8 +911,8 @@
 
       <!-- DROPDOWN -->
       <section class="section-card" id="dropdown">
-        <div class="text-h5">Dropdown</div>
-        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Shown open with "Prisma Media" selected.</p>
+        <div class="title-h5-strong">Dropdown</div>
+        <p class="paragraph-p2-regular" style="margin-bottom:16px;color:var(--interface-neutrals-content-65);">Shown open with "Prisma Media" selected.</p>
         <div class="dropdown">
           <div class="dropdown-item">Dotdash Meredith</div>
           <div class="dropdown-item">Axel Springer</div>
@@ -770,7 +929,7 @@
 
       <!-- TYPE CARDS -->
       <section class="section-card" id="typecards">
-        <div class="text-h5">Type Cards</div>
+        <div class="title-h5-strong">Type Cards</div>
         <div style="display:flex;gap:24px;max-width:480px;">
           <div class="type-card" style="flex:1">
             <i class="ri-apps-line"></i>
@@ -785,7 +944,7 @@
 
       <!-- TAGS -->
       <section class="section-card" id="tags">
-        <div class="text-h5">Tags</div>
+        <div class="title-h5-strong">Tags</div>
         <div class="row-center">
           <span class="tag tag-passed">Passed</span>
           <span class="tag tag-failed">Failed</span>
@@ -796,7 +955,7 @@
 
       <!-- ALERTS -->
       <section class="section-card" id="alerts">
-        <div class="text-h5">Alerts</div>
+        <div class="title-h5-strong">Alerts</div>
         <div class="col" style="gap:16px;">
           <div class="alert alert-info">
             <i class="ri-information-line"></i>
@@ -811,31 +970,31 @@
 
       <!-- METADATA CARD -->
       <section class="section-card" id="metacard">
-        <div class="text-h5">Metadata Preview Card</div>
-        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Shown after URL auto-detection in the drawer.</p>
+        <div class="title-h5-strong">Metadata Preview Card</div>
+        <p class="paragraph-p2-regular" style="margin-bottom:16px;color:var(--interface-neutrals-content-65);">Shown after URL auto-detection in the drawer.</p>
         <div class="meta-card" style="max-width:380px;">
           <div class="meta-favicon">G</div>
           <div class="meta-info">
-            <span class="text-p2-regular">Gala.fr</span>
-            <span class="text-p3-regular" style="color:var(--color-content-65)">com.prismamedia.teleloisirs</span>
+            <span class="paragraph-p2-regular">Gala.fr</span>
+            <span class="paragraph-p3-regular" style="color:var(--interface-neutrals-content-65)">com.prismamedia.teleloisirs</span>
           </div>
         </div>
       </section>
 
       <!-- VALIDATION CRITERIA -->
       <section class="section-card" id="validation">
-        <div class="text-h5">Validation Criteria List</div>
+        <div class="title-h5-strong">Validation Criteria List</div>
         <div class="criteria-list">
           <div class="criteria-row">
-            <span class="text-p2-regular">Brand safety</span>
+            <span class="paragraph-p2-regular">Brand safety</span>
             <span class="tag tag-passed">Passed</span>
           </div>
           <div class="criteria-row">
-            <span class="text-p2-regular">IVT</span>
+            <span class="paragraph-p2-regular">IVT</span>
             <span class="tag tag-passed">Passed</span>
           </div>
           <div class="criteria-row">
-            <span class="text-p2-regular">MFA</span>
+            <span class="paragraph-p2-regular">MFA</span>
             <span class="tag tag-passed">Passed</span>
           </div>
         </div>
@@ -843,40 +1002,36 @@
 
       <!-- TOAST -->
       <section class="section-card" id="toast">
-        <div class="text-h5">Toast Notification</div>
-        <p class="text-p2-regular" style="margin-bottom:16px;color:var(--color-content-65);">Appears top-left of content area after property creation.</p>
+        <div class="title-h5-strong">Toast Notification</div>
+        <p class="paragraph-p2-regular" style="margin-bottom:16px;color:var(--interface-neutrals-content-65);">Appears top-left of content area after property creation.</p>
         <div class="toast">
           <i class="ri-checkbox-circle-line"></i>
-          <span class="text-p2-regular">The property has been successfully created</span>
+          <span class="paragraph-p2-regular">The property has been successfully created</span>
         </div>
       </section>
 
       <!-- AVATAR -->
       <section class="section-card" id="avatar">
-        <div class="text-h5">Avatar</div>
+        <div class="title-h5-strong">Avatar</div>
         <div class="row-center">
           <div class="avatar">RM</div>
           <div class="col" style="gap:2px;">
-            <span class="text-p2-bold">Rachid M'halla</span>
-            <span class="text-p3-regular" style="color:var(--color-content-65)">Ogury</span>
+            <span class="paragraph-p2-bold">Rachid M'halla</span>
+            <span class="paragraph-p3-regular" style="color:var(--interface-neutrals-content-65)">Ogury</span>
           </div>
         </div>
       </section>
 
       <!-- SIDENAV -->
       <section class="section-card" id="sidenav">
-        <div class="text-h5">Sidenav</div>
-        <p class="text-p2-regular" style="margin-bottom:24px;color:var(--color-content-65);">"Properties" is the active item. All sections expanded.</p>
+        <div class="title-h5-strong">Sidenav</div>
+        <p class="paragraph-p2-regular" style="margin-bottom:24px;color:var(--interface-neutrals-content-65);">"Properties" is the active item. All sections expanded.</p>
 
         <div class="sidenav">
-          <!-- Logo -->
           <div>
             <div class="sidenav-logo">ogury <span>one</span></div>
-
-            <!-- Nav -->
             <nav class="sidenav-nav">
 
-              <!-- Publisher's Space -->
               <div class="nav-group">
                 <div class="nav-level1 active">
                   <i class="ri-building-line nav-icon"></i>
@@ -891,7 +1046,6 @@
                 </div>
               </div>
 
-              <!-- Reporting -->
               <div class="nav-group">
                 <div class="nav-level1">
                   <i class="ri-line-chart-line nav-icon"></i>
@@ -903,7 +1057,6 @@
                 </div>
               </div>
 
-              <!-- Settings -->
               <div class="nav-group">
                 <div class="nav-level1">
                   <i class="ri-settings-3-line nav-icon"></i>
@@ -918,13 +1071,12 @@
             </nav>
           </div>
 
-          <!-- Bottom -->
           <div class="sidenav-bottom">
             <div class="sidenav-user">
               <div class="avatar">RM</div>
               <div class="sidenav-user-info">
-                <span class="text-p2-bold">Rachid M'halla</span>
-                <span class="text-p3-regular" style="color:var(--color-content-65)">Ogury</span>
+                <span class="paragraph-p2-bold">Rachid M'halla</span>
+                <span class="paragraph-p3-regular" style="color:var(--interface-neutrals-content-65)">Ogury</span>
               </div>
             </div>
             <div class="sidenav-collapse">
@@ -938,7 +1090,6 @@
   </main>
 
   <script>
-    // Smooth scroll for sidebar links
     document.querySelectorAll('.showcase-sidebar a').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -947,18 +1098,16 @@
       });
     });
 
-    // Highlight active sidebar link on scroll
     const sections = document.querySelectorAll('.section-card');
     const links = document.querySelectorAll('.showcase-sidebar a');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          links.forEach(l => l.style.background = '');
-          links.forEach(l => l.style.color = '');
+          links.forEach(l => { l.style.background = ''; l.style.color = ''; });
           const active = document.querySelector(`.showcase-sidebar a[href="#${entry.target.id}"]`);
           if (active) {
-            active.style.background = 'var(--color-secondary-light)';
-            active.style.color = 'var(--color-secondary-default)';
+            active.style.background = 'var(--interface-main-secondary-200)';
+            active.style.color = 'var(--interface-main-secondary-500)';
           }
         }
       });
