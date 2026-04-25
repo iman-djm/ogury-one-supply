@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSM — Properties</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --brand-primary-blue: #003B63;
+      --brand-tertiary-green: #0A9999;
+      --interface-main-primary-500: #003B63;
+      --interface-main-secondary-200: #E6F4FF;
+      --interface-main-secondary-500: #0077C7;
+      --interface-main-secondary-600: #005A96;
+      --interface-neutrals-white: #FFFFFF;
+      --interface-neutrals-neutral-100: #F6F6F9;
+      --interface-neutrals-neutral-200: #CDD4DF;
+      --interface-neutrals-black-0: rgba(0,0,0,0);
+      --interface-neutrals-black-40: rgba(0,0,0,0.4);
+      --interface-neutrals-content-100: #1B3145;
+      --interface-neutrals-content-65: rgba(27,49,69,0.65);
+      --interface-neutrals-content-55: rgba(27,49,69,0.55);
+      --interface-neutrals-content-45: rgba(27,49,69,0.45);
+      --interface-neutrals-content-10: rgba(27,49,69,0.10);
+      --interface-neutrals-content-4: rgba(27,49,69,0.04);
+      --interface-status-success-default: #1D875A;
+      --interface-status-success-light: #EEF7F3;
+      --interface-status-info-default: #066DF4;
+      --interface-status-info-light: #E6F0FE;
+      --media-magenta-magenta1: #FDE8FF;
+      --media-magenta-magenta8: #5B106A;
+      --media-lime-lime1: #F2FBEE;
+      --media-lime-lime9: #147C3D;
+      --media-dust-red-red1: #FFE8E8;
+      --media-dust-red-red9: #650812;
+      --elevations-elevation-2:
+        0px 8px 10px rgba(109,91,91,0.05),
+        0px 0.71px 2.82px rgba(109,91,91,0.03),
+        0px 0.13px 1px rgba(109,91,91,0.02),
+        0px 0.41px 0.72px rgba(109,91,91,0.01);
+      --elevations-elevation-3:
+        0px 9px 16px rgba(109,91,91,0.10),
+        0px 1.71px 4.82px rgba(109,91,91,0.05),
+        0px 1.13px 2px rgba(109,91,91,0.02),
+        0px 0.41px 0.72px rgba(109,91,91,0.01);
+      --effects-button-primary-effect: 0px 5px 7px rgba(0,59,99,0.20);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 20px;
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-24: 24px;
+    }
+
+    /* ─── RESET & BASE ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      font-family: 'PP Telegraf', system-ui, sans-serif;
+      color: var(--interface-neutrals-content-100);
+      background: var(--interface-neutrals-neutral-100);
+      display: flex;
+    }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────── */
+    .title-h5-strong      { font-size: 24px; line-height: 28px; font-weight: 600; }
+    .title-h6-strong      { font-size: 20px; line-height: 24px; font-weight: 600; }
+    .paragraph-p1-regular { font-size: 16px; line-height: 20px; font-weight: 400; }
+    .paragraph-p2-bold    { font-size: 14px; line-height: 18px; font-weight: 600; }
+    .paragraph-p2-regular { font-size: 14px; line-height: 18px; font-weight: 400; }
+    .paragraph-p3-regular { font-size: 12px; line-height: 14px; font-weight: 400; }
+
+    /* ─── SIDENAV ────────────────────────────────────────── */
+    .sidenav {
+      width: 250px;
+      flex-shrink: 0;
+      height: 100vh;
+      background: var(--interface-neutrals-neutral-100);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--interface-neutrals-neutral-200);
+    }
+    .sidenav-logo {
+      height: 106px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--interface-main-secondary-500);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .sidenav-logo span { font-weight: 700; }
+    .sidenav-nav { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+    .nav-group {
+      background: var(--interface-neutrals-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .nav-level1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      cursor: default;
+      border-radius: var(--radius-md);
+    }
+    .nav-level1 i.nav-icon { font-size: 24px; color: var(--interface-neutrals-content-65); }
+    .nav-level1.active i.nav-icon { color: var(--interface-main-secondary-500); }
+    .nav-level1-label {
+      flex: 1;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      color: var(--interface-neutrals-content-100);
+    }
+    .nav-level1.active .nav-level1-label { color: var(--interface-main-secondary-500); }
+    .nav-level1 i.nav-chevron { font-size: 16px; color: var(--interface-neutrals-content-45); }
+    .nav-children { padding: 0 4px 4px 4px; }
+    .nav-level2 {
+      display: block;
+      padding: 8px 4px 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--interface-neutrals-content-65);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-level2:hover {
+      background: var(--interface-neutrals-neutral-100);
+      color: var(--interface-neutrals-content-100);
+    }
+    .nav-level2.active {
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
+      font-weight: 600;
+    }
+    .sidenav-bottom { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .sidenav-user { display: flex; align-items: center; gap: 8px; }
+    .sidenav-user-info { display: flex; flex-direction: column; gap: 1px; }
+    .sidenav-collapse { display: flex; justify-content: flex-end; }
+
+    /* ─── AVATAR ─────────────────────────────────────────── */
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--media-magenta-magenta1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--media-magenta-magenta8);
+      flex-shrink: 0;
+    }
+
+    /* ─── ICON BUTTON ────────────────────────────────────── */
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--interface-neutrals-content-65);
+      transition: background 0.12s;
+    }
+    .btn-icon:hover {
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-500);
+    }
+    .btn-icon i { font-size: 24px; }
+
+    /* ─── MAIN COLUMN ────────────────────────────────────── */
+    .main-col {
+      flex: 1;
+      min-width: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ─── PAGE HEADER ────────────────────────────────────── */
+    .page-header {
+      height: 108px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 24px 16px 24px 0;
+      border-bottom: 1px solid var(--interface-neutrals-neutral-200);
+    }
+    .page-header-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .page-header-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn i { font-size: 18px; }
+    .btn-primary {
+      background: var(--interface-main-primary-500);
+      color: var(--interface-neutrals-white);
+      box-shadow: var(--effects-button-primary-effect);
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-secondary {
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-600);
+    }
+    .btn-secondary:hover { opacity: 0.82; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--interface-main-secondary-600);
+    }
+    .btn-ghost:hover { background: var(--interface-main-secondary-200); }
+    .btn-disabled, .btn:disabled {
+      background: var(--interface-neutrals-content-4);
+      color: var(--interface-neutrals-content-55);
+      box-shadow: none;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ─── CONTENT AREA ───────────────────────────────────── */
+    .content-area {
+      flex: 1;
+      padding: 24px 24px 24px 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .content-card {
+      background: var(--interface-neutrals-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elevations-elevation-2);
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ─── TOOLBAR ────────────────────────────────────────── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+    .input-wrap { position: relative; display: flex; align-items: center; width: 300px; }
+    .input-icon-left {
+      position: absolute;
+      left: 12px;
+      font-size: 18px;
+      color: var(--interface-neutrals-content-45);
+      pointer-events: none;
+    }
+    .input {
+      width: 100%;
+      height: 40px;
+      padding: 7px 12px 7px 38px;
+      border: 1px solid var(--interface-neutrals-neutral-200);
+      border-radius: var(--radius-md);
+      background: var(--interface-neutrals-white);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--interface-neutrals-content-100);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .input::placeholder { color: var(--interface-neutrals-content-45); }
+    .input:focus { border-color: var(--interface-main-secondary-500); }
+
+    /* ─── EMPTY STATE ────────────────────────────────────── */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      text-align: center;
+    }
+    .empty-state-text { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── SIDENAV ───────────────────────────────────────── -->
+  <aside class="sidenav">
+    <div>
+      <div class="sidenav-logo">ogury <span>one</span></div>
+      <nav class="sidenav-nav">
+
+        <div class="nav-group">
+          <div class="nav-level1 active">
+            <i class="ri-building-line nav-icon"></i>
+            <span class="nav-level1-label">Publisher's Space</span>
+            <i class="ri-arrow-up-s-line nav-chevron"></i>
+          </div>
+          <div class="nav-children">
+            <a class="nav-level2" href="#">Publishers</a>
+            <a class="nav-level2 active" href="#">Properties</a>
+            <a class="nav-level2" href="#">Placements</a>
+            <a class="nav-level2" href="#">Rules</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-level1">
+            <i class="ri-line-chart-line nav-icon"></i>
+            <span class="nav-level1-label">Reporting</span>
+            <i class="ri-arrow-up-s-line nav-chevron"></i>
+          </div>
+          <div class="nav-children">
+            <a class="nav-level2" href="#">Health Index</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-level1">
+            <i class="ri-settings-3-line nav-icon"></i>
+            <span class="nav-level1-label">Settings</span>
+            <i class="ri-arrow-up-s-line nav-chevron"></i>
+          </div>
+          <div class="nav-children">
+            <a class="nav-level2" href="#">Users</a>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+
+    <div class="sidenav-bottom">
+      <div class="sidenav-user">
+        <div class="avatar">RM</div>
+        <div class="sidenav-user-info">
+          <span class="paragraph-p2-bold">Rachid M'halla</span>
+          <span class="paragraph-p3-regular" style="color:var(--interface-neutrals-content-65)">Ogury</span>
+        </div>
+      </div>
+      <div class="sidenav-collapse">
+        <button class="btn-icon"><i class="ri-arrow-left-s-line"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN COLUMN ───────────────────────────────────── -->
+  <div class="main-col">
+
+    <!-- Page header -->
+    <header class="page-header">
+      <div class="page-header-text">
+        <span class="paragraph-p2-regular" style="color:var(--interface-neutrals-content-65)">Publisher's Space</span>
+        <span class="title-h5-strong">Properties</span>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-primary" id="btn-add-property">
+          <i class="ri-add-line"></i> Add property
+        </button>
+      </div>
+    </header>
+
+    <!-- Content area -->
+    <div class="content-area">
+      <div class="content-card">
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="input-wrap">
+            <i class="ri-search-line input-icon-left"></i>
+            <input class="input" type="text" placeholder="Property name, bundle, domain" />
+          </div>
+          <button class="btn btn-ghost">
+            <i class="ri-filter-3-line"></i> Filter
+          </button>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="view-empty">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Outer rounded box -->
+            <rect x="10" y="18" width="80" height="60" rx="8" fill="#E6F4FF" />
+            <!-- Lid -->
+            <rect x="10" y="18" width="80" height="18" rx="8" fill="#B3D9F5" />
+            <rect x="10" y="28" width="80" height="8" fill="#B3D9F5" />
+            <!-- Handle on lid -->
+            <rect x="38" y="12" width="24" height="10" rx="5" fill="#B3D9F5" />
+            <!-- Abstract lines suggesting empty content -->
+            <rect x="24" y="48" width="52" height="5" rx="2.5" fill="#B3D9F5" opacity="0.7" />
+            <rect x="24" y="58" width="36" height="5" rx="2.5" fill="#B3D9F5" opacity="0.5" />
+          </svg>
+
+          <div class="empty-state-text">
+            <span class="paragraph-p1-regular" style="color:var(--interface-neutrals-content-100)">No items to display</span>
+            <span class="paragraph-p2-regular" style="color:var(--interface-neutrals-content-65);max-width:400px">
+              This list is currently empty. Start by adding your first item!
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
