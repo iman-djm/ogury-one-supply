@@ -35,6 +35,8 @@
       --media-lime-lime9: #147C3D;
       --media-dust-red-red1: #FFE8E8;
       --media-dust-red-red9: #650812;
+      --interface-status-destructive-default: #C22424;
+      --interface-status-destructive-light: #FFEDED;
       --elevations-elevation-2:
         0px 8px 10px rgba(109,91,91,0.05),
         0px 0.71px 2.82px rgba(109,91,91,0.03),
@@ -94,12 +96,13 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      font-weight: 400;
-      color: var(--interface-main-secondary-500);
+      font-weight: 700;
       letter-spacing: -0.01em;
       flex-shrink: 0;
+      gap: 6px;
     }
-    .sidenav-logo span { font-weight: 700; }
+    .sidenav-logo .logo-ogury { color: var(--interface-main-primary-500); }
+    .sidenav-logo .logo-one   { color: var(--brand-tertiary-green); }
     .sidenav-nav { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
     .nav-group {
       background: var(--interface-neutrals-white);
@@ -152,6 +155,20 @@
     .sidenav-user { display: flex; align-items: center; gap: 8px; }
     .sidenav-user-info { display: flex; flex-direction: column; gap: 1px; }
     .sidenav-collapse { display: flex; justify-content: flex-end; }
+    .ds-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      line-height: 14px;
+      font-weight: 400;
+      color: var(--interface-neutrals-content-45);
+      text-decoration: none;
+      padding: 4px 2px;
+      transition: color 0.15s;
+    }
+    .ds-link i { font-size: 13px; }
+    .ds-link:hover { color: var(--interface-neutrals-content-65); }
 
     /* ─── AVATAR ─────────────────────────────────────────── */
     .avatar {
@@ -196,7 +213,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      background: var(--interface-neutrals-white);
+      background: var(--interface-neutrals-neutral-100);
     }
 
     /* ─── PAGE HEADER ────────────────────────────────────── */
@@ -205,7 +222,8 @@
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      padding: 24px 16px 24px 0;
+      padding: 24px 24px 24px 24px;
+      background: var(--interface-neutrals-neutral-100);
     }
     .page-header-text {
       flex: 1;
@@ -261,7 +279,7 @@
     /* ─── CONTENT AREA ───────────────────────────────────── */
     .content-area {
       flex: 1;
-      padding: 24px 24px 24px 0;
+      padding: 0 24px 24px 24px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -366,6 +384,7 @@
       padding: 0 24px;
       height: 72px;
       flex-shrink: 0;
+      background: var(--interface-neutrals-neutral-100);
       border-bottom: 1px solid var(--interface-neutrals-neutral-200);
     }
 
@@ -466,10 +485,7 @@
 
     /* ─── DROPDOWN ───────────────────────────────────────── */
     .drawer-dropdown {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
+      position: fixed; /* fixed so overflow-y:auto on body doesn't clip it */
       background: var(--interface-neutrals-white);
       border: 1px solid var(--interface-neutrals-neutral-200);
       border-radius: var(--radius-md);
@@ -477,7 +493,7 @@
       padding: 8px;
       max-height: 256px;
       overflow-y: auto;
-      z-index: 200;
+      z-index: 300;
       display: none;
     }
     .drawer-dropdown.open { display: block; }
@@ -513,32 +529,58 @@
       max-height: 0;
       opacity: 0;
       transform: translateY(8px);
-      transition: max-height 0.25s ease, opacity 0.2s ease, transform 0.2s ease;
+      transition: max-height 0.4s ease, opacity 0.2s ease, transform 0.2s ease;
     }
     .conditional-fields.visible {
-      max-height: 600px;
+      max-height: 900px;
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ─── METADATA CARD ──────────────────────────────────── */
-    .meta-card {
+    /* App-only fields hidden by default */
+    .app-only { display: none; }
+
+    /* ─── RADIO BUTTONS ──────────────────────────────────── */
+    .radio-group {
       display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--interface-neutrals-content-100);
+    }
+    .radio-option input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: var(--interface-main-secondary-500);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ─── METADATA CARD ──────────────────────────────────── */
+    @keyframes metaFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .meta-card {
+      display: none; /* hidden: contributes no height, no flex gap */
       align-items: center;
       gap: 12px;
       background: var(--interface-neutrals-neutral-100);
       border-radius: var(--radius-md);
       padding: 16px;
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: max-height 0.25s ease, opacity 0.2s ease, transform 0.2s ease;
     }
     .meta-card.visible {
-      max-height: 100px;
-      opacity: 1;
-      transform: translateY(0);
+      display: flex;
+      animation: metaFadeIn 0.2s ease forwards;
     }
     .meta-favicon {
       width: 36px;
@@ -572,6 +614,286 @@
     }
     .btn-close:hover { background: var(--interface-neutrals-neutral-100); }
     .btn-close i { font-size: 20px; }
+
+    /* ─── ALERT ──────────────────────────────────────────── */
+    .alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--interface-neutrals-content-100);
+    }
+    .alert i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .alert-info  { background: var(--interface-status-info-light); }
+    .alert-info i { color: var(--interface-status-info-default); }
+    .alert-success { background: var(--interface-status-success-light); }
+    .alert-success i { color: var(--interface-status-success-default); }
+    .alert-destructive { background: var(--interface-status-destructive-light); }
+    .alert-destructive i { color: var(--interface-status-destructive-default); }
+
+    /* ─── URL + VALIDATE FUSED ROW ───────────────────────── */
+    .validate-row { display: flex; }
+    .validate-row .drawer-input {
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      border-right: none;
+      flex: 1;
+      background: var(--interface-neutrals-content-4);
+      border-color: var(--interface-neutrals-content-10);
+      color: var(--interface-neutrals-content-55);
+      cursor: not-allowed;
+    }
+    .btn-validate-fused {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--interface-main-secondary-200);
+      color: var(--interface-main-secondary-600);
+      border: 1px solid var(--interface-neutrals-neutral-200);
+      border-left: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-validate-fused:hover:not(:disabled) { opacity: 0.82; }
+    .btn-validate-fused:disabled {
+      background: var(--interface-neutrals-content-4);
+      color: var(--interface-neutrals-content-45);
+      cursor: not-allowed;
+      border-color: var(--interface-neutrals-content-10);
+    }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--interface-main-secondary-600);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    /* ─── VALIDATION RESULTS ─────────────────────────────── */
+    .validation-results {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+    .validation-results.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    /* ─── CRITERIA LIST ──────────────────────────────────── */
+    .criteria-list { display: flex; flex-direction: column; gap: 8px; }
+    .criteria-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 30px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    /* ─── TAGS ───────────────────────────────────────────── */
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      line-height: 14px;
+      font-weight: 400;
+    }
+    .tag-passed            { background: var(--media-lime-lime1);                    color: var(--media-lime-lime9); }
+    .tag-failed            { background: var(--media-dust-red-red1);                 color: var(--media-dust-red-red9); }
+    .tag-pending           { background: var(--interface-neutrals-neutral-100);      color: var(--interface-neutrals-content-65); }
+    .tag-validation-failed { background: var(--interface-status-destructive-light);  color: var(--interface-status-destructive-default); }
+
+    /* ─── CONTEXT MENU ──────────────────────────────────────── */
+    .ctx-menu {
+      position: fixed;
+      width: 200px;
+      background: var(--interface-neutrals-white);
+      border: 1px solid var(--interface-neutrals-neutral-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elevations-elevation-3);
+      padding: 8px;
+      z-index: 400;
+      display: none;
+    }
+    .ctx-menu.open { display: block; }
+    .ctx-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: var(--interface-neutrals-content-100);
+      transition: background 0.1s;
+    }
+    .ctx-item i { font-size: 16px; color: var(--interface-main-secondary-500); flex-shrink: 0; }
+    .ctx-item:hover { background: var(--interface-neutrals-neutral-100); }
+
+    /* ─── STEP 2 BODY ────────────────────────────────────── */
+    #drawer-body-step2 { display: none; }
+    #drawer-body-step2.active { display: flex; }
+
+    /* ─── TABLE ──────────────────────────────────────────── */
+    .table-wrap {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    .table-wrap::-webkit-scrollbar { height: 6px; width: 6px; }
+    .table-wrap::-webkit-scrollbar-track { background: transparent; }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: var(--interface-neutrals-content-45);
+      border-radius: 3px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    thead tr {
+      background: var(--interface-neutrals-neutral-100);
+      height: 54px;
+      border-bottom: 1px solid var(--interface-neutrals-neutral-200);
+    }
+    thead th {
+      padding: 0 12px;
+      font-weight: 600;
+      color: var(--interface-neutrals-content-100);
+      text-align: left;
+      white-space: nowrap;
+      position: relative;
+    }
+    thead th:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 25%; height: 50%;
+      width: 1px;
+      background: var(--interface-neutrals-neutral-200);
+    }
+    thead th .sort-icon {
+      font-size: 14px;
+      color: var(--interface-neutrals-content-45);
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    tbody tr {
+      height: 54px;
+      border-bottom: 1px solid var(--interface-neutrals-neutral-200);
+      background: var(--interface-neutrals-white);
+      transition: background 2s ease;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 0 12px; white-space: nowrap; }
+
+    /* Frozen Name column */
+    thead th:first-child,
+    tbody td:first-child {
+      position: sticky;
+      left: 0;
+      background: inherit;
+      z-index: 2;
+    }
+    thead th:first-child { background: var(--interface-neutrals-neutral-100); z-index: 3; }
+
+    /* Name cell */
+    .cell-name { display: flex; align-items: center; gap: 10px; }
+    .row-favicon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      color: var(--interface-main-primary-500);
+    }
+
+    /* Platform OS cell */
+    .cell-type { display: flex; align-items: center; gap: 6px; color: var(--interface-neutrals-content-100); }
+    .cell-type i { font-size: 16px; }
+
+    /* Property ID cell */
+    .cell-id { display: flex; align-items: center; gap: 6px; }
+    .copy-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--interface-neutrals-content-45);
+      font-size: 16px; padding: 2px; line-height: 1;
+      transition: color 0.15s;
+    }
+    .copy-btn:hover { color: var(--interface-main-secondary-500); }
+
+    /* Row actions */
+    .cell-actions { display: flex; align-items: center; gap: 4px; }
+    .row-action-btn {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border: none; background: none; cursor: pointer;
+      border-radius: var(--radius-sm);
+      color: var(--interface-neutrals-content-45);
+      font-size: 16px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .row-action-btn:hover {
+      background: var(--interface-neutrals-neutral-100);
+      color: var(--interface-neutrals-content-100);
+    }
+
+    /* New row highlight */
+    @keyframes rowHighlight {
+      0%   { background: var(--interface-main-secondary-200); }
+      100% { background: var(--interface-neutrals-white); }
+    }
+    .row-new { animation: rowHighlight 2s ease forwards; }
+
+    /* ─── TOAST ──────────────────────────────────────────── */
+    .toast {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--interface-neutrals-white);
+      box-shadow: var(--elevations-elevation-3);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 18px;
+      z-index: 50;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .toast i { font-size: 16px; color: var(--interface-status-success-default); flex-shrink: 0; }
+    .toast.hide { opacity: 0; }
+
+    /* Content area needs position:relative for toast */
+    .content-area { position: relative; }
   </style>
 </head>
 <body>
@@ -579,7 +901,7 @@
   <!-- ─── SIDENAV ───────────────────────────────────────── -->
   <aside class="sidenav">
     <div>
-      <div class="sidenav-logo">ogury <span>one</span></div>
+      <div class="sidenav-logo"><span class="logo-ogury">ogury</span><span class="logo-one">one</span></div>
       <nav class="sidenav-nav">
 
         <div class="nav-group">
@@ -632,6 +954,9 @@
       <div class="sidenav-collapse">
         <button class="btn-icon"><i class="ri-arrow-left-s-line"></i></button>
       </div>
+      <a href="index.html" target="_blank" class="ds-link">
+        <i class="ri-palette-line"></i> Design system
+      </a>
     </div>
   </aside>
 
@@ -645,6 +970,9 @@
         <span class="title-h5-strong">Properties</span>
       </div>
       <div class="page-header-actions">
+        <button class="btn btn-secondary" id="btn-export" style="display:none">
+          <i class="ri-download-line"></i> Export
+        </button>
         <button class="btn btn-primary" id="btn-add-property">
           <i class="ri-add-line"></i> Add property
         </button>
@@ -652,7 +980,7 @@
     </header>
 
     <!-- Content area -->
-    <div class="content-area">
+    <div class="content-area" id="content-area">
       <div class="content-card">
 
         <!-- Toolbar -->
@@ -664,6 +992,85 @@
           <button class="btn btn-ghost">
             <i class="ri-filter-3-line"></i> Filter
           </button>
+        </div>
+
+        <!-- Table (shown after first Create) -->
+        <div class="table-wrap" id="view-table" style="display:none">
+          <table>
+            <thead>
+              <tr>
+                <th>Name <i class="ri-arrow-up-down-line sort-icon"></i></th>
+                <th style="width:140px">Platform OS</th>
+                <th style="width:230px">Property ID</th>
+                <th style="width:200px">Bundle / Domain</th>
+                <th style="width:120px">Validation</th>
+                <th style="width:120px">Health</th>
+                <th style="width:100px">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <!-- Row: Cuisine AZ -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#E6F4FF;color:#005A96">C</div><span>Cuisine AZ</span></div></td>
+                <td><div class="cell-type"><i class="ri-global-line"></i><span>Site</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-A3F291B84C2D</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>cuisineaz.com</td>
+                <td><span class="tag tag-passed">Validated</span></td>
+                <td><span class="tag tag-passed">Optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+              <!-- Row: Femme Actuelle -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#FDE8FF;color:#5B106A">F</div><span>Femme Actuelle</span></div></td>
+                <td><div class="cell-type"><i class="ri-global-line"></i><span>Site</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-D7E3921F5A8B</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>femmeactuelle.fr</td>
+                <td><span class="tag tag-passed">Validated</span></td>
+                <td><span class="tag tag-passed">Optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+              <!-- Row: Geo -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#F2FBEE;color:#147C3D">G</div><span>Geo</span></div></td>
+                <td><div class="cell-type"><i class="ri-android-line"></i><span>Android</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-C12B7F394E6A</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>com.geo.android</td>
+                <td><span class="tag tag-passed">Validated</span></td>
+                <td><span class="tag tag-passed">Optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+              <!-- Row: Voici -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#FFF3E0;color:#E65100">V</div><span>Voici</span></div></td>
+                <td><div class="cell-type"><i class="ri-global-line"></i><span>Site</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-8E4D2F719B3C</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>voici.fr</td>
+                <td><span class="tag tag-passed">Validated</span></td>
+                <td><span class="tag tag-passed">Optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+              <!-- Row: Harper's Bazaar -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#F3E5F5;color:#6A1B9A">H</div><span>Harper's Bazaar</span></div></td>
+                <td><div class="cell-type"><i class="ri-apple-line"></i><span>iOS</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-5F8A3E192D7B</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>harpersbazaar.com</td>
+                <td><span class="tag tag-failed">Failed</span></td>
+                <td><span class="tag tag-failed">Not optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" data-row-failed="true" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+              <!-- Row: Le Monde -->
+              <tr>
+                <td><div class="cell-name"><div class="row-favicon" style="background:#E6F4FF;color:#003B63">L</div><span>Le Monde</span></div></td>
+                <td><div class="cell-type"><i class="ri-global-line"></i><span>Site</span></div></td>
+                <td><div class="cell-id"><span style="font-family:monospace;font-size:13px">OGY-B294C7D5F3A1</span><button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button></div></td>
+                <td>lemonde.fr</td>
+                <td><span class="tag tag-passed">Validated</span></td>
+                <td><span class="tag tag-passed">Optimal</span></td>
+                <td><div class="cell-actions"><button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button><button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button><button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <!-- Empty state -->
@@ -690,6 +1097,28 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- ─── PUBLISHER DROPDOWN (body-level, escapes all transforms) ── -->
+  <div class="drawer-dropdown" id="publisher-dropdown">
+    <div class="dd-item" data-value="Dotdash Meredith">Dotdash Meredith</div>
+    <div class="dd-item" data-value="Axel Springer">Axel Springer</div>
+    <div class="dd-item" data-value="News Corp">News Corp</div>
+    <div class="dd-item" data-value="Prisma Media">Prisma Media</div>
+    <div class="dd-item" data-value="Future PLC">Future PLC</div>
+    <div class="dd-item" data-value="The New York Times">The New York Times</div>
+    <div class="dd-item" data-value="Daily Mail Group">Daily Mail Group</div>
+    <div class="dd-item" data-value="Condé Nast">Condé Nast</div>
+    <div class="dd-item" data-value="Tencent Media">Tencent Media</div>
+    <div class="dd-item" data-value="Hachette Livre">Hachette Livre</div>
+  </div>
+
+  <!-- ─── CONTEXT MENU (body-level, position:fixed) ──────── -->
+  <div class="ctx-menu" id="ctx-menu">
+    <div class="ctx-item" id="ctx-revalidate">
+      <i class="ri-shield-check-line"></i>
+      <span>Re-validate property</span>
     </div>
   </div>
 
@@ -736,41 +1165,43 @@
                      type="text" placeholder="Select a publisher" readonly />
               <i class="ri-arrow-down-s-line icon-right"></i>
             </div>
-            <div class="drawer-dropdown" id="publisher-dropdown">
-              <div class="dd-item" data-value="Dotdash Meredith">Dotdash Meredith</div>
-              <div class="dd-item" data-value="Axel Springer">Axel Springer</div>
-              <div class="dd-item" data-value="News Corp">News Corp</div>
-              <div class="dd-item" data-value="Prisma Media">Prisma Media</div>
-              <div class="dd-item" data-value="Future PLC">Future PLC</div>
-              <div class="dd-item" data-value="The New York Times">The New York Times</div>
-              <div class="dd-item" data-value="Daily Mail Group">Daily Mail Group</div>
-              <div class="dd-item" data-value="Condé Nast">Condé Nast</div>
-              <div class="dd-item" data-value="Tencent Media">Tencent Media</div>
-              <div class="dd-item" data-value="Hachette Livre">Hachette Livre</div>
-            </div>
+            <!-- Dropdown is rendered in <body> to escape any ancestor transform -->
           </div>
         </div>
 
-        <!-- URL / Bundle field -->
+        <!-- Property type — App only -->
+        <div class="field app-only" id="field-property-type">
+          <div class="field-label">Property type</div>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="property-type" value="ios" /> <span>iOS</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="property-type" value="android" /> <span>Android</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- URL / App search field -->
         <div class="field">
-          <div class="field-label" id="url-label">Website URL</div>
+          <div class="field-label" id="url-label">App search</div>
           <div class="drawer-input-wrap">
             <input class="drawer-input" id="url-input"
-                   type="text" placeholder="e.g. https://www.washingtonpost.com" />
+                   type="text" placeholder="e.g. com.example.myapp" />
           </div>
-          <!-- Metadata preview card -->
+          <!-- Metadata preview card — shown on blur -->
           <div class="meta-card" id="meta-card">
             <div class="meta-favicon" id="meta-favicon">G</div>
             <div class="meta-info">
-              <span class="paragraph-p2-regular" id="meta-name">Gala.fr</span>
+              <span class="paragraph-p2-regular" id="meta-name">Gala</span>
               <span class="paragraph-p3-regular" id="meta-bundle"
-                    style="color:var(--interface-neutrals-content-65)">com.prismamedia.teleloisirs</span>
+                    style="color:var(--interface-neutrals-content-65)">app.gala.fr</span>
             </div>
           </div>
         </div>
 
-        <!-- Name field -->
-        <div class="field">
+        <!-- Name field — revealed on URL blur -->
+        <div class="field" id="field-name" style="display:none">
           <div class="field-label" id="name-label">Website name</div>
           <div class="drawer-input-wrap">
             <input class="drawer-input" id="name-input"
@@ -778,7 +1209,96 @@
           </div>
         </div>
 
+        <!-- Device type — App only -->
+        <div class="field app-only" id="field-device-type" style="display:none">
+          <div class="field-label">Device type</div>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="device-type" value="mobile" /> <span>Mobile</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="device-type" value="ctv" /> <span>CTV</span>
+            </label>
+          </div>
+        </div>
+
       </div>
+    </div>
+
+    <!-- Body — Step 2 -->
+    <div class="drawer-body" id="drawer-body-step2">
+
+      <p class="paragraph-p2-regular" style="color:var(--interface-neutrals-content-65)">
+        Validation against IAS and DoubleVerify is required before proceeding. You can override validation failures if needed at your own discretion.
+      </p>
+
+      <!-- URL + Validate fused -->
+      <div class="field">
+        <div class="field-label" id="s2-url-label">Website URL</div>
+        <div class="validate-row">
+          <input class="drawer-input" id="s2-url-display" type="text" disabled />
+          <button class="btn-validate-fused" id="btn-validate">Validate</button>
+        </div>
+      </div>
+
+      <!-- Info alert -->
+      <div class="alert alert-info">
+        <i class="ri-information-line"></i>
+        <span>Validation reflects data at the time of creation. Follow-up changes are not automatically monitored.</span>
+      </div>
+
+      <!-- Validation results (hidden until Validate is clicked) -->
+      <div class="validation-results" id="validation-results">
+        <div class="alert alert-success">
+          <i class="ri-checkbox-circle-line"></i>
+          <span>Domain meets all Ogury standards. Asset creation can proceed.</span>
+        </div>
+
+        <div class="criteria-list">
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">Brand safety</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">IVT</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">MFA</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+        </div>
+
+        <button class="btn btn-ghost" style="align-self:flex-start;padding-left:0">
+          <i class="ri-download-line"></i> Download report
+        </button>
+      </div>
+
+      <!-- Failure validation results (shown when URL contains "teleloisirs") -->
+      <div class="validation-results" id="validation-results-fail">
+        <div class="alert alert-destructive">
+          <i class="ri-error-warning-line"></i>
+          <span>Domain does not meets all Ogury standards. Asset creation cannot proceed.</span>
+        </div>
+        <div class="criteria-list">
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">Brand safety</span>
+            <span class="tag tag-validation-failed">Failed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">IVT</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+          <div class="criteria-row">
+            <span class="paragraph-p2-regular">MFA</span>
+            <span class="tag tag-passed">Passed</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost" style="align-self:flex-start;padding-left:0">
+          <i class="ri-download-line"></i> Download report
+        </button>
+      </div>
+
     </div>
 
     <!-- Footer -->
@@ -789,93 +1309,142 @@
   </div>
 
   <script>
-    /* ── STATE ─────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       STATE
+    ═══════════════════════════════════════════════════════ */
     const state = {
-      drawerOpen: false,
       step: 1,
       type: null,
       publisher: null,
       url: '',
       name: '',
       validated: false,
+      reValidating: false,   // true when opened from table "…" menu
+      reValidateRow: null,   // TR element being re-validated
     };
 
-    /* ── ELEMENTS ──────────────────────────────────────────── */
-    const overlay         = document.getElementById('overlay');
-    const drawer          = document.getElementById('drawer');
-    const btnAddProperty  = document.getElementById('btn-add-property');
-    const btnClose        = document.getElementById('drawer-close');
-    const typeApp         = document.getElementById('type-app');
-    const typeWebsite     = document.getElementById('type-website');
-    const conditionalFields = document.getElementById('conditional-fields');
-    const publisherInput  = document.getElementById('publisher-input');
-    const publisherDD     = document.getElementById('publisher-dropdown');
-    const urlLabel        = document.getElementById('url-label');
-    const urlInput        = document.getElementById('url-input');
-    const nameLabel       = document.getElementById('name-label');
-    const nameInput       = document.getElementById('name-input');
-    const metaCard        = document.getElementById('meta-card');
-    const metaFavicon     = document.getElementById('meta-favicon');
-    const metaName        = document.getElementById('meta-name');
-    const metaBundle      = document.getElementById('meta-bundle');
-    const btnNext         = document.getElementById('btn-next');
+    /* ═══════════════════════════════════════════════════════
+       ELEMENT REFS
+    ═══════════════════════════════════════════════════════ */
+    const overlay             = document.getElementById('overlay');
+    const drawer              = document.getElementById('drawer');
+    const drawerTitle         = drawer.querySelector('.title-h6-strong');
+    const btnAddProperty      = document.getElementById('btn-add-property');
+    const btnClose            = document.getElementById('drawer-close');
 
-    /* ── OPEN / CLOSE ──────────────────────────────────────── */
+    // Step 1
+    const bodyStep1           = document.getElementById('drawer-body-step1');
+    const typeApp             = document.getElementById('type-app');
+    const typeWebsite         = document.getElementById('type-website');
+    const conditionalFields   = document.getElementById('conditional-fields');
+    const publisherInput      = document.getElementById('publisher-input');
+    const publisherDD         = document.getElementById('publisher-dropdown');
+    const urlLabel            = document.getElementById('url-label');
+    const urlInput            = document.getElementById('url-input');
+    const nameLabel           = document.getElementById('name-label');
+    const nameInput           = document.getElementById('name-input');
+    const metaCard            = document.getElementById('meta-card');
+    const metaFavicon         = document.getElementById('meta-favicon');
+    const metaName            = document.getElementById('meta-name');
+    const metaBundle          = document.getElementById('meta-bundle');
+    const btnNext             = document.getElementById('btn-next');
+
+    // Step 2
+    const bodyStep2           = document.getElementById('drawer-body-step2');
+    const s2UrlLabel          = document.getElementById('s2-url-label');
+    const s2UrlDisplay        = document.getElementById('s2-url-display');
+    const btnValidate         = document.getElementById('btn-validate');
+    const validationResults   = document.getElementById('validation-results');
+
+    // Footer (shared)
+    const drawerFooter        = drawer.querySelector('.drawer-footer');
+
+    /* ═══════════════════════════════════════════════════════
+       OPEN / CLOSE
+    ═══════════════════════════════════════════════════════ */
     function openDrawer() {
+      resetToStep1();
       overlay.classList.add('open');
       drawer.classList.add('open');
-      state.drawerOpen = true;
     }
 
     function closeDrawer() {
+      publisherDD.classList.remove('open');
       overlay.classList.remove('open');
       drawer.classList.remove('open');
-      state.drawerOpen = false;
     }
 
     btnAddProperty.addEventListener('click', openDrawer);
     btnClose.addEventListener('click', closeDrawer);
     overlay.addEventListener('click', closeDrawer);
 
-    /* ── TYPE SELECTION ────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════
+       STEP 1 — FORM
+    ═══════════════════════════════════════════════════════ */
+
+    /* Type cards */
+    const appOnlyFields = document.querySelectorAll('.app-only');
+
     [typeApp, typeWebsite].forEach(card => {
       card.addEventListener('click', () => {
-        const chosen = card.dataset.type;
-        state.type = chosen;
+        state.type = card.dataset.type;
+        typeApp.classList.toggle('selected', state.type === 'app');
+        typeWebsite.classList.toggle('selected', state.type === 'website');
 
-        typeApp.classList.toggle('selected', chosen === 'app');
-        typeWebsite.classList.toggle('selected', chosen === 'website');
+        const isApp = state.type === 'app';
 
-        // Update labels
-        if (chosen === 'website') {
+        // Show/hide app-only fields
+        appOnlyFields.forEach(f => f.style.display = isApp ? 'flex' : 'none');
+
+        // Update labels & placeholders
+        if (!isApp) {
           urlLabel.textContent  = 'Website URL';
-          urlInput.placeholder  = 'e.g. https://www.washingtonpost.com';
+          urlInput.placeholder  = 'e.g. https://www.voici.fr';
           nameLabel.textContent = 'Website name';
-          nameInput.placeholder = 'e.g. The Washington Post';
+          nameInput.placeholder = 'e.g. Voici';
         } else {
-          urlLabel.textContent  = 'App bundle ID';
-          urlInput.placeholder  = 'e.g. com.example.myapp';
+          urlLabel.textContent  = 'App search';
+          urlInput.placeholder  = 'e.g. app.gala.fr';
           nameLabel.textContent = 'App name';
-          nameInput.placeholder = 'e.g. My App';
+          nameInput.placeholder = 'e.g. Gala';
         }
 
-        // Show conditional fields
+        // Reset URL field, meta card, and name field when switching type
+        urlInput.value = '';
+        nameInput.value = '';
+        state.url = '';
+        state.name = '';
+        metaCard.classList.remove('visible');
+        document.getElementById('field-name').style.display = 'none';
+        document.getElementById('field-device-type').style.display = 'none';
+
         conditionalFields.classList.add('visible');
         checkNext();
       });
     });
 
-    /* ── PUBLISHER DROPDOWN ────────────────────────────────── */
-    publisherInput.addEventListener('click', (e) => {
+    /* Publisher dropdown — position:fixed so drawer overflow doesn't clip it */
+    function openPublisherDD() {
+      const rect = publisherInput.getBoundingClientRect();
+      publisherDD.style.top   = (rect.bottom + 4) + 'px';
+      publisherDD.style.left  = rect.left + 'px';
+      publisherDD.style.width = rect.width + 'px';
+      publisherDD.classList.add('open');
+    }
+
+    publisherInput.addEventListener('click', e => {
       e.stopPropagation();
-      publisherDD.classList.toggle('open');
+      if (publisherDD.classList.contains('open')) {
+        publisherDD.classList.remove('open');
+      } else {
+        openPublisherDD();
+      }
     });
 
     document.querySelectorAll('.dd-item').forEach(item => {
       item.addEventListener('click', () => {
-        const val = item.dataset.value;
-        state.publisher = val;
-        publisherInput.value = val;
+        state.publisher      = item.dataset.value;
+        publisherInput.value = item.dataset.value;
         publisherDD.classList.remove('open');
         document.querySelectorAll('.dd-item').forEach(i => i.classList.remove('selected'));
         item.classList.add('selected');
@@ -883,63 +1452,548 @@
       });
     });
 
-    // Close dropdown on outside click
-    document.addEventListener('click', (e) => {
-      if (!document.getElementById('publisher-select-wrap').contains(e.target)) {
+    document.addEventListener('click', e => {
+      const wrap = document.getElementById('publisher-select-wrap');
+      if (!wrap.contains(e.target) && !publisherDD.contains(e.target))
         publisherDD.classList.remove('open');
-      }
     });
 
-    /* ── URL AUTO-DETECTION ────────────────────────────────── */
-    let debounceTimer = null;
-    const MOCK_WEBSITE = { initial: 'G', name: 'Gala.fr',   bundle: 'com.prismamedia.teleloisirs' };
-    const MOCK_APP     = { initial: 'M', name: 'My App',     bundle: 'com.example.myapp' };
+    /* URL / App search — show card on blur, auto-fill name */
+    const MOCK_WEBSITE = { initial: 'V', name: 'Voici', bundle: 'Toutes les news people sont sur Voici !', autofill: 'Voici' };
+    const MOCK_APP     = { initial: 'G', name: 'Gala',  bundle: 'app.gala.fr', autofill: 'Gala' };
 
     urlInput.addEventListener('input', () => {
       state.url = urlInput.value.trim();
+      if (!state.url) metaCard.classList.remove('visible');
       checkNext();
+    });
 
-      clearTimeout(debounceTimer);
+    urlInput.addEventListener('blur', () => {
+      state.url = urlInput.value.trim();
       if (state.url.length >= 3) {
-        debounceTimer = setTimeout(() => {
-          const mock = state.type === 'app' ? MOCK_APP : MOCK_WEBSITE;
-          metaFavicon.textContent = mock.initial;
-          metaName.textContent    = mock.name;
-          metaBundle.textContent  = mock.bundle;
-          metaCard.classList.add('visible');
-        }, 800);
-      } else {
-        metaCard.classList.remove('visible');
+        const mock = state.type === 'app' ? MOCK_APP : MOCK_WEBSITE;
+        metaFavicon.textContent = mock.initial;
+        metaName.textContent    = mock.name;
+        metaBundle.textContent  = mock.bundle;
+        metaCard.classList.add('visible');
+
+        // Reveal name field (and device-type if App)
+        const fieldName = document.getElementById('field-name');
+        fieldName.style.display = 'flex';
+        if (state.type === 'app') {
+          document.getElementById('field-device-type').style.display = 'flex';
+        }
+
+        // Auto-fill name if still empty
+        if (!nameInput.value.trim()) {
+          nameInput.value = mock.autofill;
+          state.name = mock.autofill;
+          checkNext();
+        }
       }
     });
 
-    /* ── NAME FIELD ────────────────────────────────────────── */
+    /* Name field */
     nameInput.addEventListener('input', () => {
       state.name = nameInput.value.trim();
       checkNext();
     });
 
-    /* ── NEXT BUTTON ENABLE LOGIC ──────────────────────────── */
+    /* Next enable logic — always query the live button from the DOM */
     function checkNext() {
-      const ready = state.type && state.publisher && state.url && state.name;
-      if (ready) {
-        btnNext.classList.remove('btn-disabled');
-        btnNext.classList.add('btn-primary');
-        btnNext.disabled = false;
-      } else {
-        btnNext.classList.add('btn-disabled');
-        btnNext.classList.remove('btn-primary');
-        btnNext.disabled = true;
+      const btn = document.getElementById('btn-next');
+      if (!btn) return;
+      const ready = !!(state.type && state.publisher && state.url && state.name);
+      btn.disabled = !ready;
+      btn.classList.toggle('btn-primary',  ready);
+      btn.classList.toggle('btn-disabled', !ready);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       STEP TRANSITIONS
+    ═══════════════════════════════════════════════════════ */
+    function goToStep2() {
+      state.step = 2;
+      state.validated  = false;
+      state.reValidating = false;
+      state.reValidateRow = null;
+
+      // Populate step 2 URL display
+      s2UrlLabel.textContent  = state.type === 'app' ? 'App search' : 'Website URL';
+      s2UrlDisplay.value      = state.url;
+      btnValidate.disabled    = false;
+      btnValidate.innerHTML   = 'Validate';
+      validationResults.classList.remove('visible');
+      document.getElementById('validation-results-fail').classList.remove('visible');
+
+      // Swap bodies
+      bodyStep1.style.display = 'none';
+      bodyStep2.classList.add('active');
+
+      // Swap footer
+      drawerFooter.innerHTML = `
+        <button class="btn btn-secondary" id="btn-back">Back</button>
+        <button class="btn btn-disabled" id="btn-create" disabled>Create</button>
+      `;
+      document.getElementById('btn-back').addEventListener('click', goToStep1);
+      document.getElementById('btn-create').addEventListener('click', handleCreate);
+
+      // Wire validate (remove any prior listener first)
+      btnValidate.replaceWith(btnValidate.cloneNode(true));
+      document.getElementById('btn-validate').addEventListener('click', runValidation);
+    }
+
+    /* Open drawer directly at Step 2 for re-validation from the table */
+    function openDrawerForRevalidate(row, bundle) {
+      state.step = 2;
+      state.validated    = false;
+      state.reValidating = true;
+      state.reValidateRow = row;
+
+      s2UrlLabel.textContent = 'Bundle / Domain';
+      s2UrlDisplay.value     = bundle;
+      document.getElementById('btn-validate') && (() => {})(); // ensure exists
+      validationResults.classList.remove('visible');
+      document.getElementById('validation-results-fail').classList.remove('visible');
+
+      // Show step 2 body
+      bodyStep1.style.display = 'none';
+      bodyStep2.classList.add('active');
+
+      // Footer: no Back, just disabled Create
+      drawerFooter.innerHTML = `
+        <button class="btn btn-disabled" id="btn-create" disabled>Create</button>
+      `;
+      document.getElementById('btn-create').addEventListener('click', handleCreate);
+
+      // Re-wire validate button
+      const currentValidateBtn = document.getElementById('btn-validate');
+      currentValidateBtn.disabled  = false;
+      currentValidateBtn.innerHTML = 'Validate';
+      currentValidateBtn.replaceWith(currentValidateBtn.cloneNode(true));
+      document.getElementById('btn-validate').addEventListener('click', runValidation);
+
+      // Open drawer
+      overlay.classList.add('open');
+      drawer.classList.add('open');
+    }
+
+    function goToStep1() {
+      state.step = 1;
+
+      bodyStep2.classList.remove('active');
+      bodyStep1.style.display = '';
+
+      drawerFooter.innerHTML = `
+        <button class="btn btn-disabled" id="btn-next" disabled>Next</button>
+      `;
+      const newBtnNext = document.getElementById('btn-next');
+
+      // Restore state
+      const ready = !!(state.type && state.publisher && state.url && state.name);
+      newBtnNext.disabled = !ready;
+      newBtnNext.classList.toggle('btn-primary',  ready);
+      newBtnNext.classList.toggle('btn-disabled', !ready);
+      newBtnNext.addEventListener('click', () => {
+        if (!newBtnNext.disabled) goToStep2();
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       STEP 2 — VALIDATE
+    ═══════════════════════════════════════════════════════ */
+    function runValidation() {
+      if (state.validated) return;
+      const vBtn  = document.getElementById('btn-validate');
+      const isFail = s2UrlDisplay.value.toLowerCase().includes('teleloisirs');
+
+      vBtn.disabled  = true;
+      vBtn.innerHTML = '<span class="spinner"></span> Validating…';
+
+      setTimeout(() => {
+        state.validated = true;
+        vBtn.disabled   = true;
+        vBtn.innerHTML  = 'Validate';
+
+        if (isFail) {
+          showFailResult();
+        } else {
+          showPassResult();
+        }
+      }, 1500);
+    }
+
+    function showPassResult() {
+      validationResults.classList.add('visible');
+      document.getElementById('validation-results-fail').classList.remove('visible');
+
+      const btnCreate = document.getElementById('btn-create');
+      if (btnCreate) {
+        btnCreate.disabled = false;
+        btnCreate.classList.remove('btn-disabled');
+        btnCreate.classList.add('btn-primary');
       }
     }
 
-    /* ── NEXT → STEP 2 (wired in Step 4) ──────────────────── */
-    btnNext.addEventListener('click', () => {
-      if (!btnNext.disabled) {
-        // Step 4 will replace this with the validation screen transition
-        console.log('Next clicked — Step 4 will wire this up');
+    function showFailResult() {
+      document.getElementById('validation-results-fail').classList.add('visible');
+      validationResults.classList.remove('visible');
+
+      if (state.reValidating) {
+        // No Back button in re-validate context
+        drawerFooter.innerHTML = `
+          <button class="btn btn-primary" id="btn-uphold">Uphold creation</button>
+        `;
+      } else {
+        drawerFooter.innerHTML = `
+          <button class="btn btn-secondary" id="btn-back">Back</button>
+          <button class="btn btn-primary" id="btn-uphold">Uphold creation</button>
+        `;
+        document.getElementById('btn-back').addEventListener('click', goToStep1);
+      }
+      document.getElementById('btn-uphold').addEventListener('click', handleUphold);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CREATE — Step 5
+    ═══════════════════════════════════════════════════════ */
+    function onCreate() {
+      const isApp  = state.type === 'app';
+      const name   = state.name  || (isApp ? 'Gala' : 'Voici');
+      const bundle = state.url   || (isApp ? 'app.gala.fr' : 'voici.fr');
+      const initial = name.charAt(0).toUpperCase();
+
+      // 1. Slide drawer out + fade overlay
+      closeDrawer();
+
+      // 2. After transition, swap views and add new row
+      setTimeout(() => {
+        // Show Export button
+        document.getElementById('btn-export').style.display = '';
+
+        // Swap empty state → table
+        document.getElementById('view-empty').style.display = 'none';
+        const viewTable = document.getElementById('view-table');
+        viewTable.style.display = '';
+
+        // Build new row (prepend to table body)
+        const tbody = document.getElementById('table-body');
+        const newTr = document.createElement('tr');
+        newTr.classList.add('row-new');
+
+        // Generate a mock property ID in OGY-XXXXXXXXXXXX format
+        const hexChars = '0123456789ABCDEF';
+        let hexPart = '';
+        for (let i = 0; i < 12; i++) hexPart += hexChars[Math.floor(Math.random() * 16)];
+        const mockId = 'OGY-' + hexPart;
+
+        // Determine Platform OS from state
+        const propertyTypeVal = isApp
+          ? (document.querySelector('input[name="property-type"]:checked')?.value || 'android')
+          : 'site';
+        const platformMap = {
+          ios:     { icon: 'ri-apple-line',   label: 'iOS',     bg: '#EEF7F3', color: '#147C3D' },
+          android: { icon: 'ri-android-line', label: 'Android', bg: '#F2FBEE', color: '#147C3D' },
+          site:    { icon: 'ri-global-line',  label: 'Site',    bg: '#E6F4FF', color: '#005A96' },
+        };
+        const platform = platformMap[propertyTypeVal] || platformMap.site;
+
+        newTr.innerHTML = `
+          <td><div class="cell-name">
+            <div class="row-favicon" style="background:${platform.bg};color:${platform.color}">${initial}</div>
+            <span>${name}</span>
+          </div></td>
+          <td><div class="cell-type"><i class="${platform.icon}"></i><span>${platform.label}</span></div></td>
+          <td><div class="cell-id">
+            <span style="font-family:monospace;font-size:13px">${mockId}</span>
+            <button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button>
+          </div></td>
+          <td>${bundle}</td>
+          <td><span class="tag tag-passed">Validated</span></td>
+          <td><span class="tag tag-passed">Optimal</span></td>
+          <td><div class="cell-actions">
+            <button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button>
+            <button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button>
+            <button class="row-action-btn more-btn" title="More"><i class="ri-more-2-line"></i></button>
+          </div></td>
+        `;
+        tbody.insertBefore(newTr, tbody.firstChild);
+
+        // Wire copy buttons in the new row (more-btn is decorative for passed rows)
+        wireCopyButtons(newTr);
+
+        // 3. Show toast
+        showToast(`"${name}" was successfully created.`);
+      }, 350);
+    }
+
+    /* Dispatch helpers */
+    function handleCreate() {
+      if (state.reValidating) onCreateFromRevalidate();
+      else onCreate();
+    }
+    function handleUphold() {
+      if (state.reValidating) onUpholdFromRevalidate();
+      else onUphold();
+    }
+
+    /* ── onUphold — same end-state as onCreate but Failed row ── */
+    function onUphold() {
+      const isApp   = state.type === 'app';
+      const name    = state.name  || (isApp ? 'Gala' : 'Voici');
+      const bundle  = state.url   || (isApp ? 'app.gala.fr' : 'voici.fr');
+      const initial = name.charAt(0).toUpperCase();
+
+      closeDrawer();
+
+      setTimeout(() => {
+        document.getElementById('btn-export').style.display = '';
+        document.getElementById('view-empty').style.display = 'none';
+        document.getElementById('view-table').style.display = '';
+
+        const tbody = document.getElementById('table-body');
+        const newTr = document.createElement('tr');
+        newTr.classList.add('row-new');
+
+        const hexChars = '0123456789ABCDEF';
+        let hexPart = '';
+        for (let i = 0; i < 12; i++) hexPart += hexChars[Math.floor(Math.random() * 16)];
+        const mockId = 'OGY-' + hexPart;
+
+        const propertyTypeVal = isApp
+          ? (document.querySelector('input[name="property-type"]:checked')?.value || 'android')
+          : 'site';
+        const platformMap = {
+          ios:     { icon: 'ri-apple-line',   label: 'iOS',     bg: '#EEF7F3', color: '#147C3D' },
+          android: { icon: 'ri-android-line', label: 'Android', bg: '#F2FBEE', color: '#147C3D' },
+          site:    { icon: 'ri-global-line',  label: 'Site',    bg: '#E6F4FF', color: '#005A96' },
+        };
+        const platform = platformMap[propertyTypeVal] || platformMap.site;
+
+        newTr.innerHTML = `
+          <td><div class="cell-name">
+            <div class="row-favicon" style="background:${platform.bg};color:${platform.color}">${initial}</div>
+            <span>${name}</span>
+          </div></td>
+          <td><div class="cell-type"><i class="${platform.icon}"></i><span>${platform.label}</span></div></td>
+          <td><div class="cell-id">
+            <span style="font-family:monospace;font-size:13px">${mockId}</span>
+            <button class="copy-btn" title="Copy ID"><i class="ri-file-copy-line"></i></button>
+          </div></td>
+          <td>${bundle}</td>
+          <td><span class="tag tag-failed">Failed</span></td>
+          <td><span style="color:var(--interface-neutrals-content-45)">—</span></td>
+          <td><div class="cell-actions">
+            <button class="row-action-btn" title="Edit"><i class="ri-pencil-line"></i></button>
+            <button class="row-action-btn" title="Delete"><i class="ri-delete-bin-line"></i></button>
+            <button class="row-action-btn more-btn" data-row-failed="true" title="More"><i class="ri-more-2-line"></i></button>
+          </div></td>
+        `;
+        tbody.insertBefore(newTr, tbody.firstChild);
+        wireCopyButtons(newTr);
+        wireMoreBtn(newTr.querySelector('.more-btn[data-row-failed]'), bundle, newTr);
+        showToast(`"${name}" was successfully created.`);
+      }, 350);
+    }
+
+    /* ── Re-validate: user clicks Create → row becomes Validated ── */
+    function onCreateFromRevalidate() {
+      const row    = state.reValidateRow;
+      const bundle = s2UrlDisplay.value;
+      closeDrawer();
+      setTimeout(() => {
+        if (row) {
+          // Update Validation cell
+          row.cells[4].innerHTML = `<span class="tag tag-passed">Validated</span>`;
+          // Update Health cell
+          row.cells[5].innerHTML = `<span class="tag tag-passed">Optimal</span>`;
+          // Unwire more-btn (make decorative)
+          const moreBtn = row.querySelector('.more-btn');
+          if (moreBtn) {
+            moreBtn.removeAttribute('data-row-failed');
+            const fresh = moreBtn.cloneNode(true);
+            moreBtn.replaceWith(fresh);
+          }
+          // Highlight row
+          row.classList.remove('row-new');
+          void row.offsetWidth; // reflow to restart animation
+          row.classList.add('row-new');
+        }
+        showToast(`Property was re-validated successfully.`);
+      }, 350);
+    }
+
+    /* ── Re-validate: user upholds → row stays Failed, highlight replays ── */
+    function onUpholdFromRevalidate() {
+      const row = state.reValidateRow;
+      closeDrawer();
+      setTimeout(() => {
+        if (row) {
+          row.classList.remove('row-new');
+          void row.offsetWidth;
+          row.classList.add('row-new');
+        }
+        showToast(`Creation upheld. Property remains marked as Failed.`);
+      }, 350);
+    }
+
+    /* Copy button behaviour */
+    function wireCopyButtons(scope) {
+      scope.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const icon = btn.querySelector('i');
+          icon.className = 'ri-check-line';
+          btn.style.color = 'var(--interface-status-success-default)';
+          setTimeout(() => {
+            icon.className = 'ri-file-copy-line';
+            btn.style.color = '';
+          }, 1500);
+        });
+      });
+    }
+
+    /* ── Context menu ─────────────────────────────────────── */
+    const ctxMenu       = document.getElementById('ctx-menu');
+    const ctxRevalidate = document.getElementById('ctx-revalidate');
+    let   ctxTargetRow  = null;
+    let   ctxTargetBundle = '';
+
+    function openCtxMenu(anchorBtn, bundle, row) {
+      ctxTargetRow    = row;
+      ctxTargetBundle = bundle;
+
+      const rect = anchorBtn.getBoundingClientRect();
+      // Prefer below; flip above if near viewport bottom
+      const menuH = 56; // approx height
+      const top = (rect.bottom + 4 + menuH > window.innerHeight)
+        ? rect.top - menuH - 4
+        : rect.bottom + 4;
+
+      ctxMenu.style.top   = top + 'px';
+      ctxMenu.style.left  = (rect.right - 200) + 'px'; // right-align
+      ctxMenu.classList.add('open');
+    }
+
+    function closeCtxMenu() {
+      ctxMenu.classList.remove('open');
+      ctxTargetRow    = null;
+      ctxTargetBundle = '';
+    }
+
+    ctxRevalidate.addEventListener('click', () => {
+      const row    = ctxTargetRow;
+      const bundle = ctxTargetBundle;
+      closeCtxMenu();
+      openDrawerForRevalidate(row, bundle);
+    });
+
+    document.addEventListener('click', e => {
+      if (ctxMenu.classList.contains('open') &&
+          !ctxMenu.contains(e.target)) {
+        closeCtxMenu();
       }
     });
+
+    /* Wire a single more-btn on a Failed row */
+    function wireMoreBtn(btn, bundle, row) {
+      if (!btn) return;
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (ctxMenu.classList.contains('open')) {
+          closeCtxMenu();
+          return;
+        }
+        openCtxMenu(btn, bundle, row);
+      });
+    }
+
+    /* Wire all pre-existing Failed more-btns in the static table */
+    document.querySelectorAll('.more-btn[data-row-failed]').forEach(btn => {
+      const row    = btn.closest('tr');
+      // Bundle is in the 4th data td (index 3, after Name/PlatformOS/ID)
+      const bundle = row.cells[3].textContent.trim();
+      wireMoreBtn(btn, bundle, row);
+    });
+
+    // Wire existing table copy buttons on load
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('i');
+        icon.className = 'ri-check-line';
+        btn.style.color = 'var(--interface-status-success-default)';
+        setTimeout(() => {
+          icon.className = 'ri-file-copy-line';
+          btn.style.color = '';
+        }, 1500);
+      });
+    });
+
+    /* Toast */
+    function showToast(message) {
+      // Remove any existing toast
+      const existing = document.getElementById('toast-msg');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.id = 'toast-msg';
+      toast.innerHTML = `<i class="ri-checkbox-circle-fill"></i><span>${message}</span>`;
+      document.getElementById('content-area').appendChild(toast);
+
+      // Auto-dismiss after 3s
+      setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════════════════════ */
+    function resetToStep1() {
+      state.step      = 1;
+      state.type      = null;
+      state.publisher = null;
+      state.url       = '';
+      state.name      = '';
+      state.validated = false;
+
+      // Reset type cards
+      typeApp.classList.remove('selected');
+      typeWebsite.classList.remove('selected');
+
+      // Reset fields
+      conditionalFields.classList.remove('visible');
+      publisherInput.value = '';
+      urlInput.value       = '';
+      nameInput.value      = '';
+      metaCard.classList.remove('visible');
+      document.querySelectorAll('.dd-item').forEach(i => i.classList.remove('selected'));
+      document.querySelectorAll('input[name="property-type"]').forEach(r => r.checked = false);
+      document.querySelectorAll('input[name="device-type"]').forEach(r => r.checked = false);
+
+      // Hide app-only and url-triggered fields
+      document.querySelectorAll('.app-only').forEach(f => f.style.display = 'none');
+      document.getElementById('field-name').style.display = 'none';
+
+      // Reset labels
+      urlLabel.textContent  = 'Website URL';
+      nameLabel.textContent = 'Website name';
+      urlInput.placeholder  = 'e.g. https://www.voici.fr';
+      nameInput.placeholder = 'e.g. Voici';
+
+      // Show step 1
+      bodyStep2.classList.remove('active');
+      bodyStep1.style.display = '';
+
+      // Reset footer
+      drawerFooter.innerHTML = `
+        <button class="btn btn-disabled" id="btn-next" disabled>Next</button>
+      `;
+      document.getElementById('btn-next').addEventListener('click', () => {
+        if (!document.getElementById('btn-next').disabled) goToStep2();
+      });
+    }
   </script>
 
 </body>
